@@ -51,3 +51,16 @@ jobs:
         run: |
           REPOSITORY_URI=047719626802.dkr.ecr.ap-northeast-2.amazonaws.com/neggu-backend
           docker push $REPOSITORY_URI:latest
+
+      - name: Docker Deploy executing remote ssh commands using ssh_key
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.HOST_IP }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          username: ec2-user
+          script: |
+            docker stop neggu-backend || true
+            docker pull 047719626802.dkr.ecr.ap-northeast-2.amazonaws.com/neggu-backend
+            docker rm -f neggu-backend || true
+            docker run -d --name neggu-backend -p 22:8080 047719626802.dkr.ecr.ap-northeast-2.amazonaws.com/neggu-backend
+            docker image prune -f
