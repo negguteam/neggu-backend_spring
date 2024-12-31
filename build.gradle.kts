@@ -50,8 +50,6 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-tasks.withType<Jar> {
-	archiveBaseName.set("neggu")
-	archiveVersion.set("")
-	archiveClassifier.set("")
+tasks.jar {
+	version = ""
 }

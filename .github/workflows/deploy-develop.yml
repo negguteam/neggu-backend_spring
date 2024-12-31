@@ -62,5 +62,5 @@ jobs:
             docker stop neggu-backend || true
             docker pull 047719626802.dkr.ecr.ap-northeast-2.amazonaws.com/neggu-backend
             docker rm -f neggu-backend || true
-            docker run -d --name neggu-backend -p 22:8080 047719626802.dkr.ecr.ap-northeast-2.amazonaws.com/neggu-backend
+            docker run -d --name neggu-backend -p 8080:8080 047719626802.dkr.ecr.ap-northeast-2.amazonaws.com/neggu-backend
             docker image prune -f
