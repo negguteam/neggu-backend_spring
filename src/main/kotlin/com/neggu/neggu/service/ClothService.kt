@@ -1,6 +1,6 @@
 package com.neggu.neggu.service
 
-import com.neggu.neggu.model.Cloth
+import com.neggu.neggu.model.cloth.Cloth
 import com.neggu.neggu.repository.ClothRepository
 import org.bson.types.ObjectId
 import org.springframework.data.repository.findByIdOrNull
@@ -12,6 +12,7 @@ class ClothService(
 ) {
 
     fun getCloths(): List<Cloth> = clothRepository.findAll()
+
     fun getCloth(id: ObjectId): Cloth? {
         return clothRepository.findByIdOrNull(id)
     }

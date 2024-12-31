@@ -19,9 +19,13 @@ class JasyptConfig(
 
     @Bean("jasyptStringEncryptor")
     fun stringEncryptor(): StringEncryptor {
-        log.info { "Encrypt Key: ${environment.getProperty("encryptKey")}" }
+        val encryptKey = environment.getProperty("encryptKey") ?: run {
+            log.error { "Encrypt Key is not set" }
+            throw IllegalArgumentException("Encrypt Key is not set")
+        }
+
         val encryptor = StandardPBEStringEncryptor().apply {
-            setPassword(environment.getProperty("encryptKey"))
+            setPassword(encryptKey)
             setSaltGenerator(RandomSaltGenerator())
             setIvGenerator(NoIvGenerator())
         }

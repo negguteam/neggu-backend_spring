@@ -1,4 +1,4 @@
-package com.neggu.neggu.model
+package com.neggu.neggu.model.cloth
 
 import io.swagger.v3.oas.annotations.media.Schema
 import org.bson.types.ObjectId

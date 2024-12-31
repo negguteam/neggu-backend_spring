@@ -7,7 +7,6 @@ plugins {
 }
 
 group = "com.neggu"
-version = "0.0.1-SNAPSHOT"
 
 java {
 	toolchain {
@@ -21,14 +20,14 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
-
+	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 	implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
-
+	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("io.github.oshai:kotlin-logging-jvm:7.0.0")
+	implementation("io.jsonwebtoken:jjwt:0.12.6")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")

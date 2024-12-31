@@ -1,4 +1,4 @@
-package com.neggu.neggu.dto.response
+package com.neggu.neggu.dto.base
 
 import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.data.domain.Page
