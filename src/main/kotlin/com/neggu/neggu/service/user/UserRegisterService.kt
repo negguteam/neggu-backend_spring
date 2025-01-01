@@ -24,23 +24,23 @@ class UserRegisterService(
         provider: OauthProvider,
         userRegisterRequest: UserRegisterRequest,
     ): TokenResponse {
-
         val user = userRepository.save(
             User(
                 email = email,
                 profileImage = null,
                 nickname = userRegisterRequest.nickname,
                 gender = userRegisterRequest.gender,
-                mood = userRegisterRequest.mood, age = userRegisterRequest.age,
+                mood = userRegisterRequest.mood,
+                age = userRegisterRequest.age,
                 oauthProvider = provider,
             )
         )
-        val refreshToken: String = jwtProvider.generateRefreshToken(user.id, user.nickname)
+        val refreshToken: String = jwtProvider.generateRefreshToken(user.id, user.email)
         val refreshTokenExpiresIn: Long = jwtProvider.getRefreshExpiredIn() + System.currentTimeMillis()
 
         refreshTokenRepository.save(RefreshToken.create(user.id!!, refreshToken, refreshTokenExpiresIn))
         return TokenResponse(
-            accessToken = jwtProvider.generateAccessToken(user.id, user.nickname),
+            accessToken = jwtProvider.generateAccessToken(user.id, user.email),
             expiresIn = jwtProvider.getExpiredIn(),
             refreshToken = refreshToken,
             refreshTokenExpiresIn = refreshTokenExpiresIn,

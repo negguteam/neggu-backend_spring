@@ -6,6 +6,7 @@ import java.lang.Exception
 enum class OauthProvider {
     KAKAO,
     APPLE,
+    GOOGLE,
     ;
 
     companion object {

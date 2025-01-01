@@ -2,6 +2,7 @@ package com.neggu.neggu.service.oauth
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.neggu.neggu.config.LoggerConfig.Companion.log
 import com.neggu.neggu.model.oauth.OidcPublicKeys
 import com.neggu.neggu.model.user.OidcUser
 import io.jsonwebtoken.Claims
@@ -27,7 +28,7 @@ class IdTokenProcessor(
         idTokenValidator.verifyPayload(payload, iss, aud)
         val claims = idTokenValidator.verifySignature(idToken, header, oidcPublicKeys)
         return getUserClaims(claims).also {
-            println(it)
+            log.debug { "claims : $it" }
         }
     }
 
@@ -44,7 +45,7 @@ class IdTokenProcessor(
     private fun getUserClaims(claims: Claims): OidcUser {
         val email = claims["email"].toString()
         return OidcUser(email).also {
-            println(it)
+            log.debug { "OidcUser : $it" }
         }
     }
 
