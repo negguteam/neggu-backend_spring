@@ -64,14 +64,12 @@ class JwtProvider(
         return claims["exp"] as Long
     }
 
-    fun getExpiredIn(): Long {
-        val expiryInMillis: Long = jwtProperties.access.expiry
-        return expiryInMillis / 1000
+    fun getExpiredIn(currentTime: Long = System.currentTimeMillis()): Long {
+        return jwtProperties.access.expiry + currentTime
     }
 
-    fun getRefreshExpiredIn(): Long {
-        val expiryInMillis: Long = jwtProperties.refresh.expiry
-        return expiryInMillis / 1000
+    fun getRefreshExpiredIn(currentTime: Long = System.currentTimeMillis()): Long {
+        return jwtProperties.refresh.expiry + currentTime
     }
 
     private fun generateToken(

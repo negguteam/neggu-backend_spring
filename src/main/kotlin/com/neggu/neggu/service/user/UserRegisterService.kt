@@ -36,7 +36,7 @@ class UserRegisterService(
             )
         )
         val refreshToken: String = jwtProvider.generateRefreshToken(user.id, user.email)
-        val refreshTokenExpiresIn: Long = jwtProvider.getRefreshExpiredIn() + System.currentTimeMillis()
+        val refreshTokenExpiresIn: Long = jwtProvider.getRefreshExpiredIn()
 
         refreshTokenRepository.save(RefreshToken.create(user.id!!, refreshToken, refreshTokenExpiresIn))
         return TokenResponse(
