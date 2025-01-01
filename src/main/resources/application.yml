@@ -7,6 +7,10 @@ spring:
 server:
   port: 8080
 
+springdoc:
+  swagger-ui:
+    tagsSorter: alpha
+
 # can encrypt here : https://www.devglan.com/online-tools/jasypt-online-encryption-decryption
 jasypt:
   encryptor:
