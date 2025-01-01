@@ -41,7 +41,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build --build-arg PROFILE=dev -t neggu-backend:latest .
+          docker build --build-arg PROFILE=beta --build-arg ENCRYPT_KEY=${{ secrets.ENCRYPT_KEY }} -t neggu-backend:latest .
       - name: Tag Docker image
         run: |
           REPOSITORY_URI=047719626802.dkr.ecr.ap-northeast-2.amazonaws.com/neggu-backend
@@ -59,6 +59,7 @@ jobs:
           key: ${{ secrets.REMOTE_SSH_KEY }}
           username: ec2-user
           script: |
+            aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 047719626802.dkr.ecr.ap-northeast-2.amazonaws.com
             docker stop neggu-backend || true
             docker pull 047719626802.dkr.ecr.ap-northeast-2.amazonaws.com/neggu-backend
             docker rm -f neggu-backend || true
