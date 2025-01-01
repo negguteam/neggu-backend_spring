@@ -41,6 +41,9 @@ enum class ErrorType(val status: HttpStatus, var message: String, val logLevel: 
     // User
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않은 사용자입니다.", LogLevel.DEBUG),
 
+    // Cloth
+    NOT_FOUND_CLOTH(HttpStatus.NOT_FOUND, "존재하지 않는 옷입니다.", LogLevel.DEBUG),
+
     // CLIENT
     OPEN_API_CALL_EXCEPTION(HttpStatus.BAD_GATEWAY, "OpenAPI 호출에 실패했습니다", LogLevel.WARN),
     PUSH_API_CALL_EXCEPTION(HttpStatus.BAD_GATEWAY, "Push Message 전송에 실패했습니다", LogLevel.WARN),
