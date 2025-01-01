@@ -1,42 +1,29 @@
 package com.neggu.neggu.controller.v1.user
 
-import com.neggu.neggu.dto.user.TokenResponse
-import com.neggu.neggu.dto.user.UserRegisterRequest
-import com.neggu.neggu.model.oauth.RegisterClaims
+import com.neggu.neggu.dto.user.TokenRequest
 import com.neggu.neggu.model.user.User
 import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.Parameter
-import io.swagger.v3.oas.annotations.enums.ParameterIn
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
 
 
-@Tag(name = "2. [유저]")
+@Tag(name = "01. [유저]")
 interface UserApi {
-    @Operation(
-        summary = "사용자 등록 API",
-        parameters = [
-            Parameter(
-                name = "RegisterToken",
-                `in` = ParameterIn.HEADER,
-                required = true,
-                description = "사용자 등록에 필요한 토큰",
-            ),
-        ],
-    )
-    @ApiResponse(responseCode = "200", description = "사용자 정보 등록 성공")
-    fun register(
-        @Schema(hidden = true) registerClaims: RegisterClaims,
-        userRegisterRequest: UserRegisterRequest,
-    ): TokenResponse
+
+    @Operation(summary = "로그아웃 API")
+    @ApiResponse(responseCode = "204", description = "로그아웃 성공")
+    fun logout(
+        @Schema(hidden = true) user: User,
+        tokenRequest: TokenRequest,
+    ): ResponseEntity<Unit>
 
     @Operation(summary = "회원 탈퇴 API 입니다.")
     @ApiResponse(responseCode = "204", description = "회원 탈퇴 성공")
     fun withdraw(
         @Schema(hidden = true) user: User,
-    ): ResponseEntity<Void>
+    ): ResponseEntity<Unit>
 
 //    @Operation(summary = "마이페이지 API 입니다.")
 //    @ApiResponse(responseCode = "200", description = "마이페이지 조회 성공")

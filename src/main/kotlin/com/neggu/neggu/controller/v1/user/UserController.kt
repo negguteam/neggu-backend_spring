@@ -3,11 +3,14 @@ package com.neggu.neggu.controller.v1.user
 
 import com.neggu.neggu.annotation.PendingUser
 import com.neggu.neggu.config.LoginUser
+import com.neggu.neggu.dto.user.TokenRequest
 import com.neggu.neggu.dto.user.TokenResponse
 import com.neggu.neggu.dto.user.UserRegisterRequest
 import com.neggu.neggu.model.oauth.RegisterClaims
 import com.neggu.neggu.model.user.OauthProvider
 import com.neggu.neggu.model.user.User
+import com.neggu.neggu.service.user.LogoutService
+import com.neggu.neggu.service.user.SocialLoginService
 import com.neggu.neggu.service.user.UserRegisterService
 import com.neggu.neggu.service.user.UserWithdrawService
 import org.springframework.http.ResponseEntity
@@ -19,29 +22,27 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/user")
 class UserController(
-    private val userRegisterService: UserRegisterService,
+    private val logoutService: LogoutService,
     private val userWithdrawService: UserWithdrawService,
 ) : UserApi {
 
-    @PostMapping("/register")
-    override fun register(
-        @PendingUser registerClaims: RegisterClaims,
-        @RequestBody userRegisterRequest: UserRegisterRequest,
-    ): TokenResponse {
-        return userRegisterService.registerUser(
-            registerClaims.email,
-            OauthProvider.from(registerClaims.provider),
-            userRegisterRequest,
-        )
+    @Secured
+    @PostMapping("/logout")
+    override fun logout(
+        @LoginUser user: User,
+        @RequestBody tokenRequest: TokenRequest,
+    ): ResponseEntity<Unit> {
+        logoutService.logout(tokenRequest.refreshToken)
+        return ResponseEntity.noContent().build()
     }
 
     @Secured
     @DeleteMapping("/withdraw")
     override fun withdraw(
         @LoginUser user: User,
-    ): ResponseEntity<Void> {
+    ): ResponseEntity<Unit> {
         userWithdrawService.withdraw(user)
         return ResponseEntity.noContent().build()
     }

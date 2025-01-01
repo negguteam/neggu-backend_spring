@@ -1,5 +1,6 @@
 package com.neggu.neggu.api
 
+import com.neggu.neggu.config.properties.OpenIdConnectProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpHeaders
@@ -8,18 +9,26 @@ import org.springframework.web.client.support.RestClientAdapter
 import org.springframework.web.service.invoker.HttpServiceProxyFactory
 
 @Configuration
-class ApiClientConfig {
+class ApiClientConfig(
+    private val openIdConnectProperties: OpenIdConnectProperties
+) {
+
+    @Bean
+    fun appleOauthClient(): AppleOauthClient =
+        registerApiClient<AppleOauthClient>(
+            baseUrl = openIdConnectProperties.apple,
+        )
 
     @Bean
     fun kakaoOauthClient(): KakaoOauthClient =
         registerApiClient<KakaoOauthClient>(
-            baseUrl = "https://kauth.kakao.com",
+            baseUrl = openIdConnectProperties.kakao,
         )
 
     @Bean
     fun googleOauthClient(): GoogleOauthClient =
         registerApiClient<GoogleOauthClient>(
-            baseUrl = "https://www.googleapis.com",
+            baseUrl = openIdConnectProperties.google,
         )
 
     private inline fun <reified T : Any> registerApiClient(

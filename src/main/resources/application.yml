@@ -1,11 +1,35 @@
 spring:
   application:
     name: neggu
+  profiles:
+    active: local
 
-# can encrypt : https://www.devglan.com/online-tools/jasypt-online-encryption-decryption
+server:
+  port: 8080
+
+# can encrypt here : https://www.devglan.com/online-tools/jasypt-online-encryption-decryption
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
 
-server:
-  port: 8080
+cors:
+  allowed-origin:
+    - http://localhost:8080/
+  max-age: 3600
+
+oidc:
+  provider:
+    kakao:
+      iss: https://kauth.kakao.com
+      aud: ENC(mM0oPSqCZDzvFj4XD2ck1g2XzR9ws18MUsNQOGE1YWhhwQ/LRJaWz4G4HyVBGnjc)
+    apple:
+      iss: https://appleid.apple.com
+      aud: APPLE_CLIENT_ID
+    google:
+      iss: https://accounts.google.com
+      aud: ENC(Y/opa61EwfoNFAaNbdJPF18I/jRgQOuNtfbt8yQaVeoNxprdIrROTuYj/Yvsoq8InT0DRBMMDm5C0WHNu5d2KPfERZ4kJhYlm+CnouF+jng1ZDh9XD8SdQ==)
+
+open-id-connect:
+  kakao: https://kauth.kakao.com
+  apple: https://appleid.apple.com
+  google: https://www.googleapis.com

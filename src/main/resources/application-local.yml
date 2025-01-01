@@ -2,3 +2,12 @@ spring:
   data:
     mongodb:
       uri: ENC(JYNslqVt6993dpuwYgY+HTiaryNupjlL9Wje60d7nri0Ih9gkT7Q42Awz+UXVP1bcopb1mILCpgPXnUuQi9pT5meKyddyxUWuH9Pr3BGvhAVTp9qzr3rd7jO/s/thKVq)
+
+auth:
+  jwt:
+    access:
+      secret: localaccesssecretlocalaccesssecretlocalaccesssecretlocalaccesssecretlocalaccesssecret
+      expiry: 14400000 # 4hours millseconds
+    refresh:
+      secret: localrefreshsecretlocalrefreshsecretlocalrefreshsecretlocalrefreshsecretlocalrefreshsecret
+      expiry: 1209600000 # 14days millseconds
