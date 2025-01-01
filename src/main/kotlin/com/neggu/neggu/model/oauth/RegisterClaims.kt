@@ -1,6 +1,6 @@
 package com.neggu.neggu.model.oauth
 
 data class RegisterClaims(
-    val nickname: String,
+    val email: String,
     val provider: String,
 )

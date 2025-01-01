@@ -13,7 +13,7 @@ data class User(
     @Id
     @get:JvmName("getUserId")
     val id: ObjectId? = null,
-//    val nickname: String, // TODO : Oauth 이메일 인증 관련 문의
+    val email: String,
     val nickname: String,
     val gender: Gender,
     val mood: List<Mood> = emptyList(),

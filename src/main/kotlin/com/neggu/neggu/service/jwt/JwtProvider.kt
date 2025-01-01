@@ -21,31 +21,31 @@ class JwtProvider(
 ) {
 
     fun generateRegisterToken(
-        nickname: String,
+        email: String,
         provider: OauthProvider,
     ): String {
-        return generateToken(nickname, provider.name, jwtProperties.access.expiry, jwtProperties.access.secret)
+        return generateToken(email, provider.name, jwtProperties.access.expiry, jwtProperties.access.secret)
     }
 
     fun generateAccessToken(
         userId: ObjectId?,
-        nickname: String,
+        email: String,
     ): String {
-        return generateToken(userId, nickname, jwtProperties.access.expiry, jwtProperties.access.secret)
+        return generateToken(userId, email, jwtProperties.access.expiry, jwtProperties.access.secret)
     }
 
     fun generateRefreshToken(
         userId: ObjectId?,
-        nickname: String,
+        email: String,
     ): String {
-        return generateToken(userId, nickname, jwtProperties.refresh.expiry, jwtProperties.refresh.secret)
+        return generateToken(userId, email, jwtProperties.refresh.expiry, jwtProperties.refresh.secret)
     }
 
     fun resolveRegisterToken(token: String?): RegisterClaims {
         val secretKey: SecretKey = getSecretKey(jwtProperties.access.secret)
         val claims = getClaims(token, secretKey)
         return RegisterClaims(
-            claims["nickname"] as String,
+            claims["email"] as String,
             claims["provider"] as String,
         )
     }
@@ -75,7 +75,7 @@ class JwtProvider(
     }
 
     private fun generateToken(
-        nickname: String,
+        email: String,
         provider: String,
         expiryTime: Long,
         secret: String,
@@ -84,7 +84,7 @@ class JwtProvider(
         val expiry = Date(now.time + expiryTime)
         return Jwts.builder()
             .expiration(expiry)
-            .claim("nickname", nickname)
+            .claim("email", email)
             .claim("provider", provider)
             .signWith(getSecretKey(secret))
             .compact()
@@ -92,7 +92,7 @@ class JwtProvider(
 
     private fun generateToken(
         userId: ObjectId?,
-        nickname: String,
+        email: String,
         expiryTime: Long,
         secret: String,
     ): String {
@@ -101,7 +101,7 @@ class JwtProvider(
         return Jwts.builder()
             .expiration(expiry)
             .claim("id", userId.toString())
-            .claim("nickname", nickname)
+            .claim("email", email)
             .signWith(getSecretKey(secret))
             .compact()
     }
@@ -114,7 +114,7 @@ class JwtProvider(
         val claims = getClaims(token, secretKey)
         return UserClaims(
             ObjectId(claims["id"] as String),
-            claims["nickname"] as String,
+            claims["email"] as String,
         )
     }
 

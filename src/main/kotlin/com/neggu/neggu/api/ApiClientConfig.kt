@@ -16,6 +16,12 @@ class ApiClientConfig {
             baseUrl = "https://kauth.kakao.com",
         )
 
+    @Bean
+    fun googleOauthClient(): GoogleOauthClient =
+        registerApiClient<GoogleOauthClient>(
+            baseUrl = "https://www.googleapis.com",
+        )
+
     private inline fun <reified T : Any> registerApiClient(
         baseUrl: String,
         defaultHeaders: HttpHeaders = HttpHeaders.EMPTY,

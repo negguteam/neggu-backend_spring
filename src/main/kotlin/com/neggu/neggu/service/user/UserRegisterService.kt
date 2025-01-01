@@ -20,15 +20,16 @@ class UserRegisterService(
 
     @Transactional
     fun registerUser(
-        nickname: String,
+        email: String,
         provider: OauthProvider,
         userRegisterRequest: UserRegisterRequest,
     ): TokenResponse {
 
         val user = userRepository.save(
             User(
-                nickname = nickname,
+                email = email,
                 profileImage = null,
+                nickname = userRegisterRequest.nickname,
                 gender = userRegisterRequest.gender,
                 mood = userRegisterRequest.mood, age = userRegisterRequest.age,
                 oauthProvider = provider,

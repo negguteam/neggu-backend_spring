@@ -26,7 +26,9 @@ class IdTokenProcessor(
         val payload = parsePayload(splitToken[1])
         idTokenValidator.verifyPayload(payload, iss, aud)
         val claims = idTokenValidator.verifySignature(idToken, header, oidcPublicKeys)
-        return getUserClaims(claims)
+        return getUserClaims(claims).also {
+            println(it)
+        }
     }
 
     private fun parseHeader(encodedHeader: String): Map<String, Any> {
@@ -40,8 +42,8 @@ class IdTokenProcessor(
     }
 
     private fun getUserClaims(claims: Claims): OidcUser {
-        val nickname = claims["nickname"].toString()
-        return OidcUser(nickname).also {
+        val email = claims["email"].toString()
+        return OidcUser(email).also {
             println(it)
         }
     }

@@ -27,9 +27,9 @@ class SocialLoginService(
     ): SocialLoginResponse {
         val oidcUser = resolveOidcUser(provider, idToken)
 
-        return userRepository.findByNicknameAndOauthProvider(oidcUser.nickname, provider)
+        return userRepository.findByEmailAndOauthProvider(oidcUser.email, provider)
             ?.let { user -> processExistingUser(user) }
-            ?: createPendingRegistrationResponse(oidcUser.nickname, provider)
+            ?: createPendingRegistrationResponse(oidcUser.email, provider)
     }
 
     private fun resolveOidcUser(
@@ -43,7 +43,7 @@ class SocialLoginService(
     private fun processExistingUser(user: User): SocialLoginResponse.Success {
         val refreshToken = generateAndSaveRefreshToken(user)
         return SocialLoginResponse.Success(
-            accessToken = jwtProvider.generateAccessToken(user.id, user.nickname),
+            accessToken = jwtProvider.generateAccessToken(user.id, user.email),
             expiresIn = jwtProvider.getExpiredIn(),
             refreshToken = refreshToken,
             refreshTokenExpiresIn = jwtProvider.getRefreshExpiredIn(),
@@ -51,16 +51,16 @@ class SocialLoginService(
     }
 
     private fun createPendingRegistrationResponse(
-        nickname: String,
+        email: String,
         provider: OauthProvider,
     ): SocialLoginResponse.Pending {
         return SocialLoginResponse.Pending(
-            registerToken = jwtProvider.generateRegisterToken(nickname, provider),
+            registerToken = jwtProvider.generateRegisterToken(email, provider),
         )
     }
 
     private fun generateAndSaveRefreshToken(user: User): String {
-        val refreshToken = jwtProvider.generateRefreshToken(user.id, user.nickname)
+        val refreshToken = jwtProvider.generateRefreshToken(user.id, user.email)
         val refreshTokenExpiresIn = jwtProvider.getRefreshExpiredIn()
         refreshTokenRepository.save(RefreshToken.create(user.id!!, refreshToken, refreshTokenExpiresIn))
         return refreshToken

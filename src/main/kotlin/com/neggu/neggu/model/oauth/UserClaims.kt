@@ -4,5 +4,5 @@ import org.bson.types.ObjectId
 
 data class UserClaims(
     val id: ObjectId,
-    val nickname: String,
+    val email: String,
 )
