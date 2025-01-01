@@ -1,4 +1,4 @@
-package com.neggu.neggu.service.oauth
+package com.neggu.neggu.service.oauth.token
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue

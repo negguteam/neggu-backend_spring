@@ -7,7 +7,7 @@ import com.neggu.neggu.model.user.RefreshToken
 import com.neggu.neggu.model.user.User
 import com.neggu.neggu.repository.RefreshTokenRepository
 import com.neggu.neggu.repository.UserRepository
-import com.neggu.neggu.service.oauth.OpenIdTokenResolverSelector
+import com.neggu.neggu.service.oauth.token.OpenIdTokenResolverSelector
 import com.neggu.neggu.service.jwt.JwtProvider
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

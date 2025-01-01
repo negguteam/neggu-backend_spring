@@ -13,13 +13,13 @@ import org.springframework.http.ResponseEntity
 interface UserApi {
 
     @Operation(summary = "로그아웃 API")
-    @ApiResponse(responseCode = "204", description = "로그아웃 성공")
+    @ApiResponse(responseCode = "204", description = "로그아웃 성공", content = [])
     fun logout(
         @Schema(hidden = true) user: User,
         tokenRequest: TokenRequest,
     ): ResponseEntity<Unit>
 
-    @Operation(summary = "회원 탈퇴 API 입니다.")
+    @Operation(summary = "회원 탈퇴 API")
     @ApiResponse(responseCode = "204", description = "회원 탈퇴 성공")
     fun withdraw(
         @Schema(hidden = true) user: User,

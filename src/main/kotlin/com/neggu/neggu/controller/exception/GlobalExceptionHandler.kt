@@ -4,14 +4,10 @@ import com.neggu.neggu.config.LoggerConfig.Companion.log
 import com.neggu.neggu.exception.BaseException
 import com.neggu.neggu.exception.ErrorResponse
 import com.neggu.neggu.exception.ErrorType
-import io.swagger.v3.oas.annotations.responses.ApiResponse
-import io.swagger.v3.oas.annotations.responses.ApiResponses
 import org.springframework.boot.logging.LogLevel
 import org.springframework.http.HttpStatus
-import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
@@ -19,7 +15,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception::class)
     private fun handleAllException(exception: Exception): ResponseEntity<ErrorResponse> {
-        log.error { "${ExceptionSource.HTTP} Exception: $exception" }
+        log.error { "${ExceptionSource.HTTP} Exception: $exception\n Detail : ${exception.printStackTrace()}" }
         return ResponseEntity
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(ErrorResponse.from(
