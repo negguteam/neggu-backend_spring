@@ -1,4 +1,4 @@
-package com.neggu.neggu.controller.v1.user
+package com.neggu.neggu.controller.v1.auth
 
 import com.neggu.neggu.annotation.ApiErrorResponse
 import com.neggu.neggu.annotation.ApiErrorResponses

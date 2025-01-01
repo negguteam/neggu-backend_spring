@@ -1,4 +1,4 @@
-package com.neggu.neggu.model.oauth
+package com.neggu.neggu.model.auth
 
 data class OidcPublicKeys(
     val keys: List<OidcPublicKey>,

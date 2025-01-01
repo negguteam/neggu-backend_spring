@@ -1,6 +1,6 @@
-package com.neggu.neggu.service.oauth.token
+package com.neggu.neggu.service.auth.token
 
-import com.neggu.neggu.model.user.OauthProvider
+import com.neggu.neggu.model.auth.OauthProvider
 import org.springframework.context.ApplicationContext
 import org.springframework.stereotype.Component
 

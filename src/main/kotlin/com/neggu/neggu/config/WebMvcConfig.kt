@@ -1,9 +1,9 @@
 package com.neggu.neggu.config
 
 import com.neggu.neggu.config.properties.CorsProperties
-import com.neggu.neggu.service.oauth.AuthInterceptor
-import com.neggu.neggu.service.oauth.LoginUserArgumentResolver
-import com.neggu.neggu.service.oauth.PendingUserArgumentResolver
+import com.neggu.neggu.service.auth.AuthInterceptor
+import com.neggu.neggu.service.auth.LoginUserArgumentResolver
+import com.neggu.neggu.service.auth.PendingUserArgumentResolver
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.servlet.config.annotation.CorsRegistry

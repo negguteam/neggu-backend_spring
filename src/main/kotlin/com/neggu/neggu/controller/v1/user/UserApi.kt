@@ -25,11 +25,12 @@ interface UserApi {
         @Schema(hidden = true) user: User,
     ): ResponseEntity<Unit>
 
-//    @Operation(summary = "마이페이지 API 입니다.")
-//    @ApiResponse(responseCode = "200", description = "마이페이지 조회 성공")
-//    fun findProfile(
-//        @Schema(hidden = true) user: User,
-//    ): MyProfileResponse
+    @Operation(summary = "마이페이지 API 입니다.")
+    @ApiResponse(responseCode = "200", description = "마이페이지 조회 성공")
+    fun findProfile(
+        @Schema(hidden = true) user: User,
+    ): User
+
 //    @Operation(summary = "닉네임 수정 API 입니다.")
 //    @ApiResponse(responseCode = "204", description = "닉네임 수정 성공")
 //    fun updateNickname(

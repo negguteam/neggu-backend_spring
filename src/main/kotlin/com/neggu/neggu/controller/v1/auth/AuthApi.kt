@@ -1,10 +1,10 @@
-package com.neggu.neggu.controller.v1.user
+package com.neggu.neggu.controller.v1.auth
 
 import com.neggu.neggu.dto.user.IdTokenRequest
 import com.neggu.neggu.dto.user.SocialLoginResponse
 import com.neggu.neggu.dto.user.TokenResponse
 import com.neggu.neggu.dto.user.UserRegisterRequest
-import com.neggu.neggu.model.oauth.RegisterClaims
+import com.neggu.neggu.model.auth.RegisterClaims
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.enums.ParameterIn

@@ -1,6 +1,6 @@
-package com.neggu.neggu.service.oauth
+package com.neggu.neggu.service.auth
 
-import com.neggu.neggu.model.oauth.OidcPublicKeys
+import com.neggu.neggu.model.auth.OidcPublicKeys
 import org.springframework.stereotype.Component
 import java.math.BigInteger
 import java.security.KeyFactory

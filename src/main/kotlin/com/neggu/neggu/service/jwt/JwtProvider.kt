@@ -3,9 +3,9 @@ package com.neggu.neggu.service.jwt
 import com.neggu.neggu.config.properties.JwtProperties
 import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.UnAuthorizedException
-import com.neggu.neggu.model.oauth.RegisterClaims
-import com.neggu.neggu.model.oauth.UserClaims
-import com.neggu.neggu.model.user.OauthProvider
+import com.neggu.neggu.model.auth.RegisterClaims
+import com.neggu.neggu.model.auth.UserClaims
+import com.neggu.neggu.model.auth.OauthProvider
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts

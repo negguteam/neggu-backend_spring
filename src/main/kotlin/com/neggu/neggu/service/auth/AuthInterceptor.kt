@@ -1,9 +1,9 @@
-package com.neggu.neggu.service.oauth
+package com.neggu.neggu.service.auth
 
+import com.neggu.neggu.annotation.AccessTokenRequire
 import com.neggu.neggu.service.jwt.JwtProvider
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.security.access.annotation.Secured
 import org.springframework.stereotype.Component
 import org.springframework.web.method.HandlerMethod
 import org.springframework.web.servlet.HandlerInterceptor
@@ -31,7 +31,7 @@ class AuthInterceptor(
     }
 
     private fun isSecured(handler: Any): Boolean {
-        return (handler as HandlerMethod).hasMethodAnnotation(Secured::class.java)
+        return (handler as HandlerMethod).hasMethodAnnotation(AccessTokenRequire::class.java)
     }
 
     private fun processAuthenticate(request: HttpServletRequest) {

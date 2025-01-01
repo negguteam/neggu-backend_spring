@@ -1,11 +1,11 @@
-package com.neggu.neggu.service.oauth.token
+package com.neggu.neggu.service.auth.token
 
 import com.neggu.neggu.api.AppleOauthClient
 import com.neggu.neggu.config.properties.AppleOauthProperties
 import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.UnAuthorizedException
-import com.neggu.neggu.model.oauth.OidcPublicKeys
-import com.neggu.neggu.model.user.OidcUser
+import com.neggu.neggu.model.auth.OidcPublicKeys
+import com.neggu.neggu.model.auth.OidcUser
 import org.springframework.stereotype.Component
 
 @Component

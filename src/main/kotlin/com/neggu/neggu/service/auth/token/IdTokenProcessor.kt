@@ -1,10 +1,10 @@
-package com.neggu.neggu.service.oauth.token
+package com.neggu.neggu.service.auth.token
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.neggu.neggu.config.LoggerConfig.Companion.log
-import com.neggu.neggu.model.oauth.OidcPublicKeys
-import com.neggu.neggu.model.user.OidcUser
+import com.neggu.neggu.model.auth.OidcPublicKeys
+import com.neggu.neggu.model.auth.OidcUser
 import io.jsonwebtoken.Claims
 import org.springframework.stereotype.Component
 import java.util.*

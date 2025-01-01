@@ -1,6 +1,6 @@
-package com.neggu.neggu.service.oauth.token
+package com.neggu.neggu.service.auth.token
 
-import com.neggu.neggu.model.user.OidcUser
+import com.neggu.neggu.model.auth.OidcUser
 
 
 interface OpenIdTokenResolver {

@@ -1,25 +1,15 @@
 package com.neggu.neggu.controller.v1.user
 
 
-import com.neggu.neggu.annotation.PendingUser
+import com.neggu.neggu.annotation.AccessTokenRequire
 import com.neggu.neggu.config.LoginUser
 import com.neggu.neggu.dto.user.TokenRequest
-import com.neggu.neggu.dto.user.TokenResponse
-import com.neggu.neggu.dto.user.UserRegisterRequest
-import com.neggu.neggu.model.oauth.RegisterClaims
-import com.neggu.neggu.model.user.OauthProvider
 import com.neggu.neggu.model.user.User
 import com.neggu.neggu.service.user.LogoutService
-import com.neggu.neggu.service.user.SocialLoginService
-import com.neggu.neggu.service.user.UserRegisterService
 import com.neggu.neggu.service.user.UserWithdrawService
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.annotation.Secured
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -28,7 +18,7 @@ class UserController(
     private val userWithdrawService: UserWithdrawService,
 ) : UserApi {
 
-    @Secured
+    @AccessTokenRequire
     @PostMapping("/logout")
     override fun logout(
         @LoginUser user: User,
@@ -38,7 +28,7 @@ class UserController(
         return ResponseEntity.noContent().build()
     }
 
-    @Secured
+    @AccessTokenRequire
     @DeleteMapping("/withdraw")
     override fun withdraw(
         @LoginUser user: User,
@@ -47,14 +37,14 @@ class UserController(
         return ResponseEntity.noContent().build()
     }
 
-//    @Secured
-//    @GetMapping("/my")
-//    override fun findProfile(
-//        @LoginUser user: User,
-//    ): MyProfileResponse {
-//        return userProfileService.findProfile(user)
-//    }
-//
+    @AccessTokenRequire
+    @GetMapping("/profile")
+    override fun findProfile(
+        @LoginUser user: User,
+    ): User {
+        return user
+    }
+
 //    @Secured
 //    @PatchMapping("/my/nickname")
 //    override fun updateNickname(

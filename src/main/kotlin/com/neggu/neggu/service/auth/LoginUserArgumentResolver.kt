@@ -1,10 +1,10 @@
-package com.neggu.neggu.service.oauth
+package com.neggu.neggu.service.auth
 
 import com.neggu.neggu.config.LoginUser
 import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.NotFoundException
 import com.neggu.neggu.exception.UnAuthorizedException
-import com.neggu.neggu.model.oauth.UserClaims
+import com.neggu.neggu.model.auth.UserClaims
 import com.neggu.neggu.model.user.User
 import com.neggu.neggu.repository.UserRepository
 import org.springframework.core.MethodParameter

@@ -1,6 +1,6 @@
 package com.neggu.neggu.repository
 
-import com.neggu.neggu.model.user.OauthProvider
+import com.neggu.neggu.model.auth.OauthProvider
 import com.neggu.neggu.model.user.User
 import org.bson.types.ObjectId
 import org.springframework.data.mongodb.repository.MongoRepository

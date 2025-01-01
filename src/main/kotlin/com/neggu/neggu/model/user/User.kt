@@ -1,5 +1,6 @@
 package com.neggu.neggu.model.user
 
+import com.neggu.neggu.model.auth.OauthProvider
 import com.neggu.neggu.model.base.AuditableEntity
 import com.neggu.neggu.model.cloth.Mood
 import org.bson.types.ObjectId
@@ -19,6 +20,7 @@ data class User(
     val mood: List<Mood> = emptyList(),
     val age: Int,
     val profileImage: String?,
+    val clothes: List<ObjectId> = emptyList(),
     val role: String = UserRole.ROLE_USER.value,
     val status: Status = Status.ACTIVE,
     val isDeleted: Boolean = false,

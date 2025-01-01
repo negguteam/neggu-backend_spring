@@ -1,4 +1,4 @@
-package com.neggu.neggu.model.user
+package com.neggu.neggu.model.auth
 
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id

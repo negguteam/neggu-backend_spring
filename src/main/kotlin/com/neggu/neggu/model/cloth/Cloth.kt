@@ -1,5 +1,6 @@
 package com.neggu.neggu.model.cloth
 
+import com.neggu.neggu.model.base.AuditableEntity
 import io.swagger.v3.oas.annotations.media.Schema
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
@@ -10,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class Cloth(
     @Id
     @Schema(description = "Primary key of the clothing item", example = "@ObjectId('60b3b3b3d4c1f1b3b3b3d4c1')")
+    @get:JvmName("getClothId")
     val id: ObjectId? = null,
     @Schema(description = "Default name generated from (brand + color + subCategory)", example = "아디다스 회색 후드")
     val name: String,
@@ -37,4 +39,7 @@ data class Cloth(
     val isPurchase: Boolean = true,
     @Schema(description = "Color code of the clothing", example = "#FFFFFF")
     val colorCode: String
-)
+) : AuditableEntity() {
+
+    override fun getId(): ObjectId? = id
+}

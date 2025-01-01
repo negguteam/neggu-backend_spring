@@ -1,4 +1,4 @@
-package com.neggu.neggu.model.user
+package com.neggu.neggu.model.auth
 
 import org.apache.coyote.BadRequestException
 import java.lang.Exception

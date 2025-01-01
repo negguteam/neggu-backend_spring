@@ -1,6 +1,6 @@
 package com.neggu.neggu.api
 
-import com.neggu.neggu.model.oauth.OidcPublicKeys
+import com.neggu.neggu.model.auth.OidcPublicKeys
 import org.springframework.web.bind.annotation.GetMapping
 
 interface AppleOauthClient {

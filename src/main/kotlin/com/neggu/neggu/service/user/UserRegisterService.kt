@@ -2,8 +2,8 @@ package com.neggu.neggu.service.user
 
 import com.neggu.neggu.dto.user.TokenResponse
 import com.neggu.neggu.dto.user.UserRegisterRequest
-import com.neggu.neggu.model.user.OauthProvider
-import com.neggu.neggu.model.user.RefreshToken
+import com.neggu.neggu.model.auth.OauthProvider
+import com.neggu.neggu.model.auth.RefreshToken
 import com.neggu.neggu.model.user.User
 import com.neggu.neggu.repository.RefreshTokenRepository
 import com.neggu.neggu.repository.UserRepository

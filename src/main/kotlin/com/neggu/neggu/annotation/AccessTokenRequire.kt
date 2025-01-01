@@ -8,4 +8,4 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement
 @SecurityRequirement(name = "AccessToken")
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION)
-annotation class Secured
+annotation class AccessTokenRequire

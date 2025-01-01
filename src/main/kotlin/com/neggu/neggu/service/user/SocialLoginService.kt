@@ -1,13 +1,13 @@
 package com.neggu.neggu.service.user
 
 import com.neggu.neggu.dto.user.SocialLoginResponse
-import com.neggu.neggu.model.user.OauthProvider
-import com.neggu.neggu.model.user.OidcUser
-import com.neggu.neggu.model.user.RefreshToken
+import com.neggu.neggu.model.auth.OauthProvider
+import com.neggu.neggu.model.auth.OidcUser
+import com.neggu.neggu.model.auth.RefreshToken
 import com.neggu.neggu.model.user.User
 import com.neggu.neggu.repository.RefreshTokenRepository
 import com.neggu.neggu.repository.UserRepository
-import com.neggu.neggu.service.oauth.token.OpenIdTokenResolverSelector
+import com.neggu.neggu.service.auth.token.OpenIdTokenResolverSelector
 import com.neggu.neggu.service.jwt.JwtProvider
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

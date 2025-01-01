@@ -1,5 +1,6 @@
-package com.neggu.neggu.controller.v1
+package com.neggu.neggu.controller.v1.cloth
 
+import com.neggu.neggu.annotation.AccessTokenRequire
 import com.neggu.neggu.dto.base.CommonResponse
 import com.neggu.neggu.model.cloth.Cloth
 import com.neggu.neggu.service.ClothService
@@ -19,6 +20,7 @@ class ClothController(
 
     @GetMapping("/{id}")
     @Operation(summary = "옷 조회")
+    @AccessTokenRequire
     fun getCloth(
         @Parameter(description = "아이디", example = "60f3b3b3b3b3b3b3b3b3b3b3")
         @PathVariable id: String

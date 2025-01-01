@@ -15,7 +15,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception::class)
     private fun handleAllException(exception: Exception): ResponseEntity<ErrorResponse> {
-        log.error { "${ExceptionSource.HTTP} Exception: $exception\n Detail : ${exception.printStackTrace()}" }
+        log.error { "${ExceptionSource.HTTP} Exception: $exception\n Detail : ${exception.stackTraceToString()}" }
         return ResponseEntity
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(ErrorResponse.from(
@@ -27,7 +27,11 @@ class GlobalExceptionHandler {
     @ExceptionHandler(BaseException::class)
     private fun handleBaseException(exception: BaseException): ResponseEntity<ErrorResponse> {
         val errorType = exception.errorType
-        logException(errorType, exception, ExceptionSource.NEGGU)
+        when (errorType.logLevel) {
+            LogLevel.ERROR -> log.error { "${ExceptionSource.HTTP} Exception: ${errorType.message}, Exception: $exception Detail : ${exception.stackTraceToString()}" }
+            LogLevel.WARN -> log.warn { "${ExceptionSource.HTTP} Exception: ${errorType.message}, Exception: $exception Detail : ${exception.stackTraceToString()}" }
+            else -> log.info { "${ExceptionSource.HTTP} Exception: ${errorType.message}, Exception: $exception Detail : ${exception.stackTraceToString()}" }
+        }
 
         return ResponseEntity
             .status(errorType.status)
@@ -117,18 +121,6 @@ class GlobalExceptionHandler {
 //            .status(errorType.status)
 //            .body(ErrorResponse.from(errorType))
 //    }
-
-    private fun logException(
-        errorType: ErrorType,
-        exception: Exception,
-        exceptionSource: ExceptionSource,
-    ) {
-        when (errorType.logLevel) {
-            LogLevel.ERROR -> log.error { "$exceptionSource Exception: ${errorType.message}, Exception: $exception" }
-            LogLevel.WARN -> log.warn { "$exceptionSource Exception: ${errorType.message}, Exception: $exception" }
-            else -> log.info { "$exceptionSource Exception: ${errorType.message}, Exception: $exception" }
-        }
-    }
 
     private enum class ExceptionSource {
         NEGGU,

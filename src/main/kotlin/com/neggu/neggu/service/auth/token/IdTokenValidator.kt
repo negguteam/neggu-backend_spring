@@ -1,10 +1,10 @@
-package com.neggu.neggu.service.oauth.token
+package com.neggu.neggu.service.auth.token
 
 import com.neggu.neggu.config.LoggerConfig.Companion.log
 import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.UnAuthorizedException
-import com.neggu.neggu.model.oauth.OidcPublicKeys
-import com.neggu.neggu.service.oauth.PublicKeyGenerator
+import com.neggu.neggu.model.auth.OidcPublicKeys
+import com.neggu.neggu.service.auth.PublicKeyGenerator
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import org.springframework.stereotype.Component

@@ -1,6 +1,6 @@
 package com.neggu.neggu.repository
 
-import com.neggu.neggu.model.user.RefreshToken
+import com.neggu.neggu.model.auth.RefreshToken
 import org.bson.types.ObjectId
 import org.springframework.data.mongodb.repository.MongoRepository
 

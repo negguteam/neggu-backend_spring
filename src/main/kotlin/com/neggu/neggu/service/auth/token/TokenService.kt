@@ -1,10 +1,10 @@
-package com.neggu.neggu.service.oauth.token
+package com.neggu.neggu.service.auth.token
 
 import com.neggu.neggu.dto.user.TokenResponse
 import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.UnAuthorizedException
-import com.neggu.neggu.model.oauth.UserClaims
-import com.neggu.neggu.model.user.RefreshToken
+import com.neggu.neggu.model.auth.UserClaims
+import com.neggu.neggu.model.auth.RefreshToken
 import com.neggu.neggu.repository.RefreshTokenRepository
 import com.neggu.neggu.service.jwt.JwtProvider
 import org.bson.types.ObjectId

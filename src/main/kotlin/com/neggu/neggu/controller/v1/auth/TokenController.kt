@@ -1,8 +1,8 @@
-package com.neggu.neggu.controller.v1.user
+package com.neggu.neggu.controller.v1.auth
 
 import com.neggu.neggu.dto.user.TokenRequest
 import com.neggu.neggu.dto.user.TokenResponse
-import com.neggu.neggu.service.oauth.token.TokenService
+import com.neggu.neggu.service.auth.token.TokenService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping

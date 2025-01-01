@@ -1,7 +1,7 @@
-package com.neggu.neggu.service.oauth
+package com.neggu.neggu.service.auth
 
 import com.neggu.neggu.annotation.PendingUser
-import com.neggu.neggu.model.oauth.RegisterClaims
+import com.neggu.neggu.model.auth.RegisterClaims
 import com.neggu.neggu.service.jwt.JwtProvider
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.core.MethodParameter

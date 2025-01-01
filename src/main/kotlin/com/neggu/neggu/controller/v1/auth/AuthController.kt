@@ -1,12 +1,12 @@
-package com.neggu.neggu.controller.v1.user
+package com.neggu.neggu.controller.v1.auth
 
 import com.neggu.neggu.annotation.PendingUser
 import com.neggu.neggu.dto.user.IdTokenRequest
 import com.neggu.neggu.dto.user.SocialLoginResponse
 import com.neggu.neggu.dto.user.TokenResponse
 import com.neggu.neggu.dto.user.UserRegisterRequest
-import com.neggu.neggu.model.oauth.RegisterClaims
-import com.neggu.neggu.model.user.OauthProvider
+import com.neggu.neggu.model.auth.RegisterClaims
+import com.neggu.neggu.model.auth.OauthProvider
 import com.neggu.neggu.service.user.SocialLoginService
 import com.neggu.neggu.service.user.UserRegisterService
 import org.springframework.web.bind.annotation.*
