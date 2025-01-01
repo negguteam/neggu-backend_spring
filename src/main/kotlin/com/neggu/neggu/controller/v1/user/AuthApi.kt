@@ -31,8 +31,8 @@ interface AuthApi {
                 ],
             ),
             ApiResponse(
-                responseCode = "200",
-                description = "소셜 로그인 보류 (pending)",
+                responseCode = "200(pending)",
+                description = "소셜 로그인 보류",
                 content = [
                     Content(
                         schema = Schema(implementation = SocialLoginResponse.Pending::class),

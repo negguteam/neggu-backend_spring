@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 
 
 sealed class SocialLoginResponse {
+
     @Schema(
         name = "SocialLoginResponse(Success)",
         description = "소셜 로그인 성공(사용자가 이미 존재할 때)",
