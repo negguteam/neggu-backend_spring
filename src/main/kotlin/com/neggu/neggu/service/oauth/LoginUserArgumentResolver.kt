@@ -19,9 +19,6 @@ import org.springframework.web.method.support.ModelAndViewContainer
 class LoginUserArgumentResolver(
     private val userRepository: UserRepository,
 ) : HandlerMethodArgumentResolver {
-    companion object {
-        private const val ATTRIBUTE_KEY = "claims"
-    }
 
     override fun supportsParameter(parameter: MethodParameter): Boolean {
         return parameter.hasParameterAnnotation(LoginUser::class.java) &&
@@ -40,5 +37,9 @@ class LoginUserArgumentResolver(
         val userClaims: UserClaims = value as UserClaims
         return userRepository.findById(userClaims.id)
             .orElseThrow { NotFoundException(ErrorType.USER_NOT_FOUND) }
+    }
+
+    companion object {
+        private const val ATTRIBUTE_KEY = "claims"
     }
 }

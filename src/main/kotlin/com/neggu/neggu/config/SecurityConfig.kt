@@ -16,11 +16,6 @@ class SecurityConfig {
             .csrf { it.disable() }
             .formLogin { it.disable() }
             .headers { it.frameOptions { it.disable() } }
-//            .sessionManagement { setSessionManagement() }
-//            .authorizeHttpRequests { setAuthorizePath() }
-//            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
-//            .addFilterAfter(jwtExceptionFilter, JwtAuthenticationFilter::class.java)
             .build()
     }
-
 }

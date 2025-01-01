@@ -9,7 +9,9 @@ data class ErrorResponse private constructor(
     val message: String,
     val fields: List<FieldErrorResponse>?,
 ) {
+
     companion object {
+
         fun from(
             errorType: ErrorType,
             fields: List<FieldErrorResponse>? = null,
@@ -17,6 +19,17 @@ data class ErrorResponse private constructor(
             ErrorResponse(
                 code = errorType,
                 message = errorType.message,
+                fields = fields,
+            )
+
+        fun from(
+            errorType: ErrorType,
+            message: String,
+            fields: List<FieldErrorResponse>? = null,
+        ): ErrorResponse =
+            ErrorResponse(
+                code = errorType,
+                message = message,
                 fields = fields,
             )
     }
