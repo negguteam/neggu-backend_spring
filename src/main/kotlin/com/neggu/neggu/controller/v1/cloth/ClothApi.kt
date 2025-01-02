@@ -12,21 +12,14 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.web.bind.annotation.PathVariable
 
 @Tag(name = "03. [옷장]")
 interface ClothApi {
 
     @Operation(summary = "내 옷장 조회 API")
-    @ApiResponse(
-        responseCode = "200",
-        description = "내 옷장 조회 성공",
-        content = [
-            Content(
-                array = ArraySchema(schema = Schema(implementation = Cloth::class))
-            )
-        ]
-    )
     @ApiErrorResponses(
         [
             ApiErrorResponse(ErrorType.NOT_FOUND_CLOTH, "해당 옷이 존재하지 않을 시 에러입니다."),
@@ -34,7 +27,9 @@ interface ClothApi {
     )
     fun getClothes(
         @Schema(hidden = true) user: User,
-    ) : List<Cloth>
+        size: Int,
+        page: Int
+    ) : Page<Cloth>
 
     @Operation(summary = "옷 조회 API")
     @ApiResponse(
@@ -52,3 +47,18 @@ interface ClothApi {
     ): Cloth
 
 }
+
+// PageResponse 클래스 정의
+@Schema(description = "페이지 응답 형식")
+data class PageResponse<T>(
+    @field:Schema(description = "현재 페이지 번호")
+    val number: Int,
+    @field:Schema(description = "페이지 크기")
+    val size: Int,
+    @field:Schema(description = "총 페이지 수")
+    val totalPages: Int,
+    @field:Schema(description = "총 데이터 수")
+    val totalElements: Long,
+    @field:Schema(description = "데이터 리스트")
+    val content: List<T>
+)
