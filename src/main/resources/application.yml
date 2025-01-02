@@ -28,7 +28,7 @@ oidc:
       aud: ENC(mM0oPSqCZDzvFj4XD2ck1g2XzR9ws18MUsNQOGE1YWhhwQ/LRJaWz4G4HyVBGnjc)
     apple:
       iss: https://appleid.apple.com
-      aud: com.neggu # Q2X68J34KX.com.neggu.app
+      aud: ENC(7ZIvlhkgojaZtxgAjIWC5lrZDaygX7Pe)
     google:
       iss: https://accounts.google.com
       aud: ENC(Y/opa61EwfoNFAaNbdJPF18I/jRgQOuNtfbt8yQaVeoNxprdIrROTuYj/Yvsoq8InT0DRBMMDm5C0WHNu5d2KPfERZ4kJhYlm+CnouF+jng1ZDh9XD8SdQ==)
