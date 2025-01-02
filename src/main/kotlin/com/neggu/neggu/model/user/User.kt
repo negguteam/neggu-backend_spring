@@ -21,6 +21,7 @@ data class User(
     val age: Int,
     val profileImage: String?,
     val clothes: List<ObjectId> = emptyList(),
+    val lookBooks: List<ObjectId> = emptyList(),
     val role: String = UserRole.ROLE_USER.value,
     val status: Status = Status.ACTIVE,
     val isDeleted: Boolean = false,
