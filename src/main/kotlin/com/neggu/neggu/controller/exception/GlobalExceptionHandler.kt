@@ -1,10 +1,11 @@
 package com.neggu.neggu.controller.exception
 
-import com.neggu.neggu.config.LoggerConfig.Companion.log
+import com.neggu.neggu.config.LoggerConfig.log
+import com.neggu.neggu.config.LoggerConfig.nError
 import com.neggu.neggu.exception.BaseException
 import com.neggu.neggu.exception.ErrorResponse
 import com.neggu.neggu.exception.ErrorType
-import org.springframework.boot.logging.LogLevel
+import com.neggu.neggu.exception.ServerException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -15,7 +16,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception::class)
     private fun handleAllException(exception: Exception): ResponseEntity<ErrorResponse> {
-        log.error { "${ExceptionSource.HTTP} Exception: $exception\n Detail : ${exception.stackTraceToString()}" }
+        log.nError(ServerException(ErrorType.SERVER_ERROR))
         return ResponseEntity
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(ErrorResponse.from(
@@ -27,11 +28,7 @@ class GlobalExceptionHandler {
     @ExceptionHandler(BaseException::class)
     private fun handleBaseException(exception: BaseException): ResponseEntity<ErrorResponse> {
         val errorType = exception.errorType
-        when (errorType.logLevel) {
-            LogLevel.ERROR -> log.error { "${ExceptionSource.HTTP} Exception: ${errorType.message}, Exception: $exception Detail : ${exception.stackTraceToString()}" }
-            LogLevel.WARN -> log.warn { "${ExceptionSource.HTTP} Exception: ${errorType.message}, Exception: $exception Detail : ${exception.stackTraceToString()}" }
-            else -> log.info { "${ExceptionSource.HTTP} Exception: ${errorType.message}, Exception: $exception Detail : ${exception.stackTraceToString()}" }
-        }
+        log.nError(exception)
 
         return ResponseEntity
             .status(errorType.status)
@@ -121,9 +118,4 @@ class GlobalExceptionHandler {
 //            .status(errorType.status)
 //            .body(ErrorResponse.from(errorType))
 //    }
-
-    private enum class ExceptionSource {
-        NEGGU,
-        HTTP,
-    }
 }

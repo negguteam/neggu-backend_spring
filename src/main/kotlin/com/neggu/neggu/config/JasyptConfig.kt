@@ -1,6 +1,7 @@
 package com.neggu.neggu.config
 
-import com.neggu.neggu.config.LoggerConfig.Companion.log
+import com.neggu.neggu.config.LoggerConfig.log
+import com.neggu.neggu.config.LoggerConfig.nError
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import org.jasypt.encryption.StringEncryptor
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
@@ -20,7 +21,7 @@ class JasyptConfig(
     @Bean("jasyptStringEncryptor")
     fun stringEncryptor(): StringEncryptor {
         val encryptKey = environment.getProperty("encryptKey") ?: run {
-            log.error { "Encrypt Key is not set" }
+            log.nError( "Encrypt Key is not set")
             throw IllegalArgumentException("Encrypt Key is not set")
         }
 

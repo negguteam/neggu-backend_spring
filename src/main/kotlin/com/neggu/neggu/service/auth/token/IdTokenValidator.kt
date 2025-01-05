@@ -1,6 +1,7 @@
 package com.neggu.neggu.service.auth.token
 
-import com.neggu.neggu.config.LoggerConfig.Companion.log
+import com.neggu.neggu.config.LoggerConfig.log
+import com.neggu.neggu.config.LoggerConfig.nError
 import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.UnAuthorizedException
 import com.neggu.neggu.model.auth.OidcPublicKeys
@@ -24,7 +25,7 @@ class IdTokenValidator(
         return try {
             Jwts.parser().verifyWith(publicKey).build().parseSignedClaims(idToken).payload
         } catch (e: Exception) {
-            log.error { "Signature verification failed: ${e.message}" }
+            log.error("Signature verification failed: ${e.message}")
             throw e
         }
     }
@@ -36,15 +37,15 @@ class IdTokenValidator(
     ) {
         payload.apply {
             require(iss == this["iss"]) {
-                log.error { "iss is $iss but iss in payload is ${this["iss"]}" }
+                log.nError( "iss is $iss but iss in payload is ${this["iss"]}")
                 throw UnAuthorizedException(ErrorType.INVALID_ID_TOKEN)
             }
             require(aud == this["aud"]) {
-                log.error { "aud is $aud but aud in payload is ${this["aud"]}" }
+                log.nError( "aud is $aud but aud in payload is ${this["aud"]}")
                 throw UnAuthorizedException(ErrorType.INVALID_ID_TOKEN)
             }
             require((this["exp"] as Number).toLong() >= System.currentTimeMillis() / 1000) {
-                log.error { "token is expired exp in payload is ${this["exp"]}" }
+                log.nError( "token is expired exp in payload is ${this["exp"]}")
                 throw UnAuthorizedException(ErrorType.INVALID_ID_TOKEN)
             }
         }

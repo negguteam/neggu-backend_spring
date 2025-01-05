@@ -21,7 +21,11 @@ cors:
     - http://localhost:8080/
   max-age: 3600
 
-
+logging:
+  slack:
+    post-chat-url: https://slack.com/api/chat.postMessage
+    post-chat-channel: 1_error_server
+    token: ENC(HgB5RsUKzQ4kxSZ+JZOxCgWPu2/VFSrGkmyE1WEDkDxCWLEtSW/s8hNL5WyohYM2JFoKDypX7FVE5k5+7bf9bZIj9rrjXjGo)
 
 oidc:
   provider:
