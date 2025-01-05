@@ -2,9 +2,10 @@ package com.neggu.neggu.api
 
 import com.neggu.neggu.model.auth.OidcPublicKeys
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.service.annotation.GetExchange
 
 interface AppleOauthClient {
 
-    @GetMapping("/auth/keys")
+    @GetExchange("/auth/keys")
     fun getPublicKeys(): OidcPublicKeys
 }
