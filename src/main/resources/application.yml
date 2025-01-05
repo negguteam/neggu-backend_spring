@@ -21,6 +21,8 @@ cors:
     - http://localhost:8080/
   max-age: 3600
 
+
+
 oidc:
   provider:
     kakao:
@@ -28,7 +30,7 @@ oidc:
       aud: ENC(9A0tR+kkLaKN+sWvP4+ZG65f6fBxRk+OcbGk99Nmz/B4R9GQra6PsYGoZuQ3LFPp)
     apple:
       iss: https://appleid.apple.com
-      aud: ENC(7ZIvlhkgojaZtxgAjIWC5lrZDaygX7Pe)
+      aud: ENC(imDf1ErWsRKty6VPe8hRNwCLGmriM4nc)
     google:
       iss: https://accounts.google.com
       aud: ENC(Y/opa61EwfoNFAaNbdJPF18I/jRgQOuNtfbt8yQaVeoNxprdIrROTuYj/Yvsoq8InT0DRBMMDm5C0WHNu5d2KPfERZ4kJhYlm+CnouF+jng1ZDh9XD8SdQ==)
