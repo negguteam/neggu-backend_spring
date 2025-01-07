@@ -94,41 +94,7 @@ object LoggerConfig {
         else -> null
     }
 
-    private fun sendSlackMessage(exception: BaseException) = slackScope.launch {
-        try {
-            val headerBlock = getHeaderBlock(exception.errorType.logLevel)
-            val message = exception.errorType.message
-            val stackTrace = exception.stackTraceToString().take(MAX_LOG_SIZE)
-            val timeBlock = getTimeBlock()
-            val payload = mapOf(
-                "channel" to slackProperties.postChatChannel,
-                "blocks" to listOfNotNull(
-                    headerBlock,
-                    mapOf(
-                        "type" to "section",
-                        "text" to mapOf(
-                            "type" to "mrkdwn",
-                            "text" to "*Message:*\n${message}"
-                        )
-                    ),
-                    mapOf(
-                        "type" to "section",
-                        "text" to mapOf(
-                            "type" to "mrkdwn",
-                            "text" to "*StackTrace:*\n```$stackTrace```"
-                        )
-                    ),
-                    timeBlock
-                )
-            )
-            val entity = HttpEntity(payload, slackHeaders)
-            restTemplate.exchange(slackProperties.postChatUrl, HttpMethod.POST, entity, String::class.java)
-        } catch (e: Exception) {
-            log.nError("Failed to send slack message. ${e.message}")
-        }
-    }
-
-    private fun sendSlackMessage(logLevel: LogLevel, message: String) = slackScope.launch {
+    private fun sendSlackMessage(message:String, stackTrace: String?, logLevel: LogLevel) = slackScope.launch {
         try {
             val headerBlock = getHeaderBlock(logLevel)
             val timeBlock = getTimeBlock()
@@ -143,35 +109,49 @@ object LoggerConfig {
                             "text" to "*Message:*\n${message}"
                         )
                     ),
+                    stackTrace?.let {
+                        mapOf(
+                            "type" to "section",
+                            "text" to mapOf(
+                                "type" to "mrkdwn",
+                                "text" to "*StackTrace:*\n```$stackTrace```"
+                            )
+                        )
+                    },
                     timeBlock
                 )
             )
             val entity = HttpEntity(payload, slackHeaders)
             restTemplate.exchange(slackProperties.postChatUrl, HttpMethod.POST, entity, String::class.java)
         } catch (e: Exception) {
-            log.error { "Failed to send slack message. ${e.message}" }
+            log.nError("Failed to send slack message. ${e.message}")
         }
     }
 
     fun KLogger.nDebug(message: String) {
         debug { message }
-        sendSlackMessage(LogLevel.DEBUG, message)
+        sendSlackMessage(message = message, stackTrace = null, logLevel = LogLevel.DEBUG)
     }
 
     fun KLogger.nInfo(message: String) {
-        error { message }
-        sendSlackMessage(LogLevel.INFO, message)
+        info { message }
+        sendSlackMessage(message = message, stackTrace = null, logLevel = LogLevel.INFO)
     }
 
     fun KLogger.nError(message: String) {
         error { message }
-        sendSlackMessage(LogLevel.ERROR, message)
+        sendSlackMessage(message = message, stackTrace = null, logLevel = LogLevel.ERROR)
     }
 
     fun KLogger.nError(exception: BaseException) {
         val errorType = exception.errorType
         error { "Exception Message: ${errorType.message} Detail : ${exception.stackTraceToString()}" }
-        sendSlackMessage(exception)
+        sendSlackMessage(message = errorType.message, stackTrace = exception.stackTraceToString().take(MAX_LOG_SIZE), logLevel = errorType.logLevel)
+    }
+
+    fun KLogger.nError(exception: Exception) {
+        error { "Exception Message: ${exception} Detail : ${exception.stackTraceToString()}" }
+        sendSlackMessage(message = exception.toString(), stackTrace = exception.stackTraceToString().take(MAX_LOG_SIZE), logLevel = LogLevel.ERROR)
     }
 
     inline val <reified T> T.log: KLogger

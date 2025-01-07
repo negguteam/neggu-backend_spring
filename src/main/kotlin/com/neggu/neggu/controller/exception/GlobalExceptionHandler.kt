@@ -2,10 +2,7 @@ package com.neggu.neggu.controller.exception
 
 import com.neggu.neggu.config.LoggerConfig.log
 import com.neggu.neggu.config.LoggerConfig.nError
-import com.neggu.neggu.exception.BaseException
-import com.neggu.neggu.exception.ErrorResponse
-import com.neggu.neggu.exception.ErrorType
-import com.neggu.neggu.exception.ServerException
+import com.neggu.neggu.exception.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -16,12 +13,13 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception::class)
     private fun handleAllException(exception: Exception): ResponseEntity<ErrorResponse> {
-        log.nError(ServerException(ErrorType.SERVER_ERROR))
+        val errorType = ErrorType.ServerError.of(exception)
+        log.nError(exception)
         return ResponseEntity
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(ErrorResponse.from(
-                errorType = ErrorType.SERVER_ERROR,
-                message = exception.message ?: "An unexpected error has occurred.",
+                errorType = errorType,
+                message = exception.toString()
             ))
     }
 

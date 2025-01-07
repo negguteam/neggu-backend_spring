@@ -19,11 +19,12 @@ class HealthController : HealthApi {
 
     @GetMapping("/unknown-error")
     override fun unKnownError(): HealthApi.HealthResponse {
-        throw RuntimeException("Unknown Error Message")
+        val a: String? = null
+        return HealthApi.HealthResponse(status = a!!)
     }
 
     @GetMapping("/known-error")
     override fun knownError(): HealthApi.HealthResponse {
-        throw NotFoundException(ErrorType.USER_NOT_FOUND)
+        throw NotFoundException(ErrorType.UserNotFound)
     }
 }

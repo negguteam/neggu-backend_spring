@@ -38,15 +38,15 @@ class IdTokenValidator(
         payload.apply {
             require(iss == this["iss"]) {
                 log.nError( "iss is $iss but iss in payload is ${this["iss"]}")
-                throw UnAuthorizedException(ErrorType.INVALID_ID_TOKEN)
+                throw UnAuthorizedException(ErrorType.InvalidIdToken)
             }
             require(aud == this["aud"]) {
                 log.nError( "aud is $aud but aud in payload is ${this["aud"]}")
-                throw UnAuthorizedException(ErrorType.INVALID_ID_TOKEN)
+                throw UnAuthorizedException(ErrorType.InvalidIdToken)
             }
             require((this["exp"] as Number).toLong() >= System.currentTimeMillis() / 1000) {
                 log.nError( "token is expired exp in payload is ${this["exp"]}")
-                throw UnAuthorizedException(ErrorType.INVALID_ID_TOKEN)
+                throw UnAuthorizedException(ErrorType.InvalidIdToken)
             }
         }
     }

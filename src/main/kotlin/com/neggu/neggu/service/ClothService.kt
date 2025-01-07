@@ -8,7 +8,6 @@ import com.neggu.neggu.repository.ClothRepository
 import org.bson.types.ObjectId
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -24,6 +23,6 @@ class ClothService(
     }
 
     fun getCloth(id: ObjectId): Cloth {
-        return clothRepository.findByIdOrNull(id) ?: throw NotFoundException(ErrorType.NOT_FOUND_CLOTH)
+        return clothRepository.findByIdOrNull(id) ?: throw NotFoundException(ErrorType.NotFoundCloth)
     }
 }

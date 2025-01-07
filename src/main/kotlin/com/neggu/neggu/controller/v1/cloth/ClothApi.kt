@@ -22,7 +22,7 @@ interface ClothApi {
     @Operation(summary = "내 옷장 조회 API")
     @ApiErrorResponses(
         [
-            ApiErrorResponse(ErrorType.NOT_FOUND_CLOTH, "해당 옷이 존재하지 않을 시 에러입니다."),
+            ApiErrorResponse(ErrorType.NotFoundCloth::class, "해당 옷이 존재하지 않을 시 에러입니다."),
         ]
     )
     fun getClothes(

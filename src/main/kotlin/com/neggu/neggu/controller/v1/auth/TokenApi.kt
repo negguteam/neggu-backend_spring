@@ -15,8 +15,8 @@ interface TokenApi {
     @ApiResponse(responseCode = "200", description = "토큰 재발급 성공")
     @ApiErrorResponses(
         [
-            ApiErrorResponse(ErrorType.INVALID_REFRESH_TOKEN, "해당 사용자의 RefreshToken이 존재하지 않을 시 에러입니다."),
-            ApiErrorResponse(ErrorType.DUPLICATE_USER_LOGIN, "중복된 로그인 발생 시 에러입니다."),
+            ApiErrorResponse(ErrorType.InvalidRefreshToken::class, "해당 사용자의 RefreshToken이 존재하지 않을 시 에러입니다."),
+            ApiErrorResponse(ErrorType.DuplicateUserLogin::class, "중복된 로그인 발생 시 에러입니다."),
         ],
     )
     fun reissueToken(tokenRequest: TokenRequest): TokenResponse

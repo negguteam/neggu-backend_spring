@@ -41,11 +41,11 @@ class TokenService(
     ) {
         val storedToken =
             refreshTokenRepository.findByUserId(userId)?.token
-                ?: throw UnAuthorizedException(ErrorType.INVALID_REFRESH_TOKEN)
+                ?: throw UnAuthorizedException(ErrorType.InvalidIdToken)
 
         if (storedToken != refreshToken) {
             refreshTokenRepository.deleteByUserId(userId)
-            throw UnAuthorizedException(ErrorType.DUPLICATE_USER_LOGIN)
+            throw UnAuthorizedException(ErrorType.DuplicateUserLogin)
         }
     }
 

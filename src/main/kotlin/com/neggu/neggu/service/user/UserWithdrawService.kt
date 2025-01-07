@@ -1,6 +1,5 @@
 package com.neggu.neggu.service.user
 
-
 import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.NotFoundException
 import com.neggu.neggu.model.user.User
@@ -17,7 +16,7 @@ class UserWithdrawService(
 
     fun withdraw(loginUser: User) {
         val user: User =
-            userRepository.findByIdOrNull(loginUser.id) ?: throw NotFoundException(ErrorType.USER_NOT_FOUND)
+            userRepository.findByIdOrNull(loginUser.id) ?: throw NotFoundException(ErrorType.UserNotFound)
         userRepository.delete(user)
     }
 }

@@ -123,9 +123,9 @@ class JwtProvider(
         return try {
             Jwts.parser().verifyWith(key).build().parseSignedClaims(token).payload
         } catch (e: ExpiredJwtException) {
-            throw UnAuthorizedException(ErrorType.TOKEN_EXPIRED)
+            throw UnAuthorizedException(ErrorType.TokenExpired)
         } catch (e: Exception) {
-            throw UnAuthorizedException(ErrorType.INVALID_JWT_TOKEN)
+            throw UnAuthorizedException(ErrorType.InvalidJwtToken)
         }
     }
 

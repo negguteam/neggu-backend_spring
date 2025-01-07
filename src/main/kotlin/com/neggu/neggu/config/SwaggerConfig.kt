@@ -18,7 +18,7 @@ import io.swagger.v3.oas.models.media.Content
 import io.swagger.v3.oas.models.media.MediaType
 import io.swagger.v3.oas.models.responses.ApiResponse
 import io.swagger.v3.oas.models.responses.ApiResponses
-
+import kotlin.reflect.KClass
 
 
 @Configuration
@@ -77,7 +77,7 @@ class OpenApiConfig {
 
     private fun generateErrorResponse(
         operation: Operation,
-        errorCode: ErrorType,
+        errorCode: KClass<out ErrorType>,
         description: String,
     ) {
         val responses = operation.responses
@@ -85,13 +85,14 @@ class OpenApiConfig {
         addExampleToApiResponse(responses, description, exampleDto)
     }
 
-    private fun createExampleDto(errorCode: ErrorType): ExampleDto {
-        val error = ErrorResponse.from(errorCode)
+    private fun createExampleDto(errorCode: KClass<out ErrorType>): ExampleDto {
+        val errorInstance = errorCode.objectInstance ?: errorCode.constructors.first().call()
+        val error = ErrorResponse.from(errorInstance)
         val example =
             Example().apply { this.value(error) }
         return ExampleDto(
-            name = errorCode.name,
-            code = errorCode.status.value(),
+            name = errorInstance::class.simpleName ?: "Unknown Error Type",
+            code = errorInstance.status.value(),
             holder = example,
         )
     }
@@ -122,26 +123,4 @@ class OpenApiConfig {
         val code: Int,
         val holder: Example,
     )
-
-//    @Bean
-//    fun openAPI(): OpenAPI {
-//        val info = Info()
-//            .title("Neggu Rest API")
-//            .version("0.0.1")
-//            .description("If you find any errors or incorrect parts, please call : neggu.business@gmail.com")
-//
-//        val headerAuth = SecurityScheme()
-//            .type(SecurityScheme.Type.APIKEY)
-//            .name("X-AUTH-TOKEN")
-//            .`in`(SecurityScheme.In.HEADER)
-//
-//        val addSecurityItem = SecurityRequirement().apply {
-//            addList("X-AUTH-TOKEN")
-//        }
-//
-//        return OpenAPI()
-//            .components(Components().addSecuritySchemes("X-AUTH-TOKEN", headerAuth))
-//            .addSecurityItem(addSecurityItem)
-//            .info(info)
-//    }
 }

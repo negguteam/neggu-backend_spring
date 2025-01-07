@@ -25,7 +25,7 @@ class KakaoIdTokenResolver(
                 kakaoOauthProperties.aud,
             )
         } catch (e: Exception) {
-            throw UnAuthorizedException(ErrorType.INVALID_ID_TOKEN)
+            throw UnAuthorizedException(ErrorType.InvalidIdToken)
         }
     }
 }
