@@ -9,16 +9,13 @@ import com.neggu.neggu.model.user.User
 import com.neggu.neggu.service.ClothService
 import io.swagger.v3.oas.annotations.Parameter
 import org.bson.types.ObjectId
+import org.springframework.context.annotation.Bean
 import org.springframework.data.domain.Page
 import org.springframework.http.MediaType
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.multipart.MultipartResolver
+import org.springframework.web.multipart.support.StandardServletMultipartResolver
 
 @RestController
 @RequestMapping("/api/v1/cloth")
@@ -52,10 +49,10 @@ class ClothController(
     )
     override fun postCloth(
         @LoginUser user: User,
-        @RequestParam image: MultipartFile,
-        @RequestParam registerRequest: ClothRegisterRequest
+        @RequestParam(required = false) image: MultipartFile,
+        @RequestPart clothRegisterRequest: ClothRegisterRequest,
     ): Cloth {
-        return clothService.postCloth(user, image, registerRequest)
+        return clothService.postCloth(user, image, clothRegisterRequest)
     }
 
     @AccessTokenRequire

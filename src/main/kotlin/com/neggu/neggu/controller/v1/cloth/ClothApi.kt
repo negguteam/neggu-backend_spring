@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.data.domain.Page
 import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.multipart.MultipartFile
 
 @Tag(name = "03. [옷장(의상)]")
@@ -60,8 +61,8 @@ interface ClothApi {
     )
     fun postCloth(
         @Schema(hidden = true) user: User,
-        @RequestParam image: MultipartFile,
-        @RequestParam registerRequest: ClothRegisterRequest
+        image: MultipartFile,
+        clothRegisterRequest: ClothRegisterRequest
     ): Cloth
 
     @Operation(summary = "옷 삭제 API")

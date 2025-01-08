@@ -11,6 +11,8 @@ import com.neggu.neggu.util.Constants
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.io.IOException
+import java.net.URLDecoder
+import java.nio.charset.StandardCharsets
 import java.time.LocalDateTime
 import java.util.*
 
@@ -45,5 +47,14 @@ class S3Service(
         val currentTime = LocalDateTime.now(Constants.timeZone).format(Constants.defaultDateFormatter)
         return "${user.id}/${currentTime}_${UUID.randomUUID()}.${extension}"
     }
+
+    fun deleteFile(imageUrl: String?) {
+        if (imageUrl == null) { return }
+        val decodedUrl = URLDecoder.decode(imageUrl, StandardCharsets.UTF_8)
+        val filePath = decodedUrl.removePrefix(getPrefixUrl())
+        amazonS3.deleteObject(awsProperties.s3.bucket, filePath)
+    }
+
+    private fun getPrefixUrl() = "https://${awsProperties.s3.bucket}.s3.${awsProperties.region}.amazonaws.com/"
 
 }

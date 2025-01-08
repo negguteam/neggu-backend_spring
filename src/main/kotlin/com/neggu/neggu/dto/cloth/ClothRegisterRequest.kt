@@ -15,7 +15,7 @@ data class ClothRegisterRequest(
     val category: Category,
     @Schema(description = "Sub-category of the clothing", example = "SHIRT_BLOUSE")
     val subCategory: SubCategory,
-    @Schema(description = "Mood tags associated with the clothing", example = "CASUAL, STREET")
+    @Schema(description = "Mood tags associated with the clothing", example = "[\"FEMININE\", \"CASUAL\"]")
     val mood: List<Mood>,
     @Schema(description = "Brand of the clothing", example = "Adidas (nullable)")
     val brand: String?,

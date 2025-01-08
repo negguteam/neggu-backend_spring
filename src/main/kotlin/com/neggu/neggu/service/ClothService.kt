@@ -1,5 +1,7 @@
 package com.neggu.neggu.service
 
+import com.neggu.neggu.config.LoggerConfig.log
+import com.neggu.neggu.config.LoggerConfig.nInfo
 import com.neggu.neggu.dto.cloth.ClothRegisterRequest
 import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.NotFoundException
@@ -49,14 +51,19 @@ class ClothService(
             name = "아직 구현 중입니다 (아디다스-회색-후드집업)", // TODO: 구현 필요
             colorCode = "구현 중입니다. (#fffffff)" // TODO: 구현 필요
         )
-        return clothRepository.save(cloth)
+        return clothRepository.save(cloth).also {
+            log.nInfo("Cloth(${it.id}) saved by user ${user.id}\n Cloth Info : $it")
+        }
     }
 
     fun deleteCloth(user: User, objectId: ObjectId): Cloth {
         val cloth = clothRepository.findByIdOrNull(objectId) ?: throw NotFoundException(ErrorType.NotFoundCloth)
         if (cloth.accountId != user.id) { throw UnAuthorizedException(ErrorType.InvalidIdToken) }
         clothRepository.delete(cloth)
-        return cloth
+        s3Service.deleteFile(cloth.imageUrl)
+        return cloth.also {
+            log.nInfo("Cloth(${it.id}) deleted by user ${user.id}\n Cloth Info : $it")
+        }
     }
 
     fun getBrands(): List<ClothBrand> {
