@@ -28,6 +28,7 @@ sealed class ErrorType(
 
     // Image
     data object NotFoundImage : ErrorType(HttpStatus.NOT_FOUND, LogLevel.DEBUG, "존재하지 않는 이미지입니다.")
+    data object ImageUploadFail : ErrorType(HttpStatus.INTERNAL_SERVER_ERROR, LogLevel.ERROR, "이미지 업로드에 실패했습니다.")
 
     // Location
     data object NotFoundLocation : ErrorType(HttpStatus.NOT_FOUND, LogLevel.DEBUG, "존재하지 않는 위치입니다.")

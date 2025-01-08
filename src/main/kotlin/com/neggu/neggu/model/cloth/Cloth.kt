@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Schema(description = "Clothing data model")
 data class Cloth(
     @Id
-    @Schema(description = "Primary key of the clothing item", example = "@ObjectId('60b3b3b3d4c1f1b3b3b3d4c1')")
+    @Schema(description = "Primary key of the clothing item", example = "60b3b3b3d4c1f1b3b3b3d4c1")
     @get:JvmName("getClothId")
     val id: ObjectId? = null,
     @Schema(description = "Default name generated from (brand + color + subCategory)", example = "아디다스 회색 후드")
@@ -20,7 +20,7 @@ data class Cloth(
     val accountId: ObjectId,
     @Schema(description = "URL of the clothing image", example = "https://example.com/images/12345.jpg")
     val imageUrl: String?,
-    @Schema(description = "Main category of the clothing", example = "상의")
+    @Schema(description = "Main category of the clothing", example = "TOP")
     val category: Category,
     @Schema(description = "Sub-category of the clothing", example = "Hoodie")
     val subCategory: SubCategory,
@@ -28,9 +28,7 @@ data class Cloth(
     val mood: List<Mood>,
     @Schema(description = "Brand of the clothing", example = "Adidas")
     val brand: String?,
-    @Schema(description = "SKU or model number of the clothing", example = "AD12345")
-    val sku: String?,
-    @Schema(description = "Price range of the clothing", example = "10~20만원")
+    @Schema(description = "Price range of the clothing", example = "UNDER_3K")
     val priceRange: PriceRange,
     @Schema(description = "Additional notes or memo", example = "Limited edition item")
     val memo: String = "",

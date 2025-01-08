@@ -1,6 +1,7 @@
 package com.neggu.neggu.config
 
 import com.neggu.neggu.exception.BaseException
+import com.neggu.neggu.util.Constants
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.CoroutineScope
@@ -17,6 +18,7 @@ import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.Executors
 
@@ -28,7 +30,6 @@ object LoggerConfig {
     private lateinit var slackProperties: SlackProperties
     private lateinit var slackHeaders: HttpHeaders
 
-    private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
     private val restTemplate = RestTemplate()
     private val MAX_LOG_SIZE = 1_000
 
@@ -49,7 +50,7 @@ object LoggerConfig {
         "elements" to listOf(
             mapOf(
                 "type" to "mrkdwn",
-                "text" to "Sent at: ${LocalDateTime.now().format(dateFormatter)}"
+                "text" to "Sent at: ${LocalDateTime.now(Constants.timeZone).format(Constants.defaultDateFormatter)}"
             )
         )
     )

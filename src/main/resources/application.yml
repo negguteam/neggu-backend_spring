@@ -3,6 +3,11 @@ spring:
     name: neggu
   profiles:
     active: local
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+      resolve-lazily: true
 
 server:
   port: 8080
@@ -43,3 +48,18 @@ open-id-connect:
   kakao: https://kauth.kakao.com
   apple: https://appleid.apple.com
   google: https://www.googleapis.com
+
+aws:
+  s3:
+    bucket: neggu-bucket
+  region: ap-northeast-2
+  credentials:
+    accessKey: ENC(hT1fN2h7wH4z+rKOZJg8cH44XhZXdyNGkne0c1wVSEg=)
+    secretKey: ENC(dsR+K6+Y2/RCJkGX+DGIHx9VEuDjX52s5k28RiSUBAX4Eb8vjGfNvFYXhVGy0St2wSuJbuxE6qw=)
+
+cloud:
+  aws:
+    stack:
+      auto: false
+    region:
+      static: ap-northeast-2
