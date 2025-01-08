@@ -4,12 +4,14 @@ import com.neggu.neggu.annotation.AccessTokenRequire
 import com.neggu.neggu.config.LoginUser
 import com.neggu.neggu.dto.cloth.ClothRegisterRequest
 import com.neggu.neggu.model.cloth.Cloth
+import com.neggu.neggu.model.cloth.ClothBrand
 import com.neggu.neggu.model.user.User
 import com.neggu.neggu.service.ClothService
 import io.swagger.v3.oas.annotations.Parameter
 import org.bson.types.ObjectId
 import org.springframework.data.domain.Page
 import org.springframework.http.MediaType
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -54,5 +56,20 @@ class ClothController(
         @RequestParam registerRequest: ClothRegisterRequest
     ): Cloth {
         return clothService.postCloth(user, image, registerRequest)
+    }
+
+    @AccessTokenRequire
+    @DeleteMapping("/{id}")
+    override fun deleteCloth(
+        @LoginUser user: User,
+        @PathVariable id: String
+    ): Cloth {
+        return clothService.deleteCloth(user, ObjectId(id))
+    }
+
+    @AccessTokenRequire
+    @GetMapping("/brands")
+    override fun getBrands(): List<ClothBrand> {
+        return clothService.getBrands()
     }
 }

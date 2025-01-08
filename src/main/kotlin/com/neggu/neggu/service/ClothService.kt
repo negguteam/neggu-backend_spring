@@ -3,8 +3,10 @@ package com.neggu.neggu.service
 import com.neggu.neggu.dto.cloth.ClothRegisterRequest
 import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.NotFoundException
+import com.neggu.neggu.exception.UnAuthorizedException
 import com.neggu.neggu.model.cloth.*
 import com.neggu.neggu.model.user.User
+import com.neggu.neggu.repository.BrandRepository
 import com.neggu.neggu.repository.ClothRepository
 import com.neggu.neggu.service.aws.S3Service
 import org.bson.types.ObjectId
@@ -18,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile
 @Service
 class ClothService(
     private val clothRepository: ClothRepository,
+    private val brandRepository: BrandRepository,
     private val s3Service: S3Service
 ) {
 
@@ -47,5 +50,16 @@ class ClothService(
             colorCode = "구현 중입니다. (#fffffff)" // TODO: 구현 필요
         )
         return clothRepository.save(cloth)
+    }
+
+    fun deleteCloth(user: User, objectId: ObjectId): Cloth {
+        val cloth = clothRepository.findByIdOrNull(objectId) ?: throw NotFoundException(ErrorType.NotFoundCloth)
+        if (cloth.accountId != user.id) { throw UnAuthorizedException(ErrorType.InvalidIdToken) }
+        clothRepository.delete(cloth)
+        return cloth
+    }
+
+    fun getBrands(): List<ClothBrand> {
+        return brandRepository.findAll()
     }
 }
