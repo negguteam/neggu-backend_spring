@@ -1,6 +1,8 @@
 package com.neggu.neggu.controller.v1.auth
 
 import com.neggu.neggu.annotation.PendingUser
+import com.neggu.neggu.config.LoggerConfig.log
+import com.neggu.neggu.config.LoggerConfig.nInfo
 import com.neggu.neggu.dto.user.IdTokenRequest
 import com.neggu.neggu.dto.user.SocialLoginResponse
 import com.neggu.neggu.dto.user.TokenResponse
@@ -46,7 +48,7 @@ class AuthController(
         @RequestParam("id_token", required = false) idToken: String?, // ID 토큰 (선택적)
     ): ResponseEntity<String> {
         val result = "Apple OAuth Callback Success"
-        println("$code $state $idToken")
+        log.nInfo("Apple Oauth -> $code $state $idToken")
         return ResponseEntity.ok(result)
     }
 }
