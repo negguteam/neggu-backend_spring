@@ -43,12 +43,10 @@ class AuthController(
 
     @PostMapping("/oauth/apple")
     fun handleAppleOAuthCallback(
-        @RequestParam("code") code: String, // 인증 코드
-        @RequestParam("state", required = false) state: String?, // 상태 값 (선택적)
+        @RequestParam("code") code: String,
         @RequestParam("id_token", required = false) idToken: String?, // ID 토큰 (선택적)
-    ): ResponseEntity<String> {
-        val result = "Apple OAuth Callback Success"
-        log.nInfo("Apple Oauth -> $code $state $idToken")
-        return ResponseEntity.ok(result)
+    ): String {
+        log.nInfo("Apple Oauth -> code : $code idToken(not valid yet) : $idToken")
+        return code
     }
 }

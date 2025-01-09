@@ -26,14 +26,16 @@ class SecurityConfig {
 
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
-        val configuration = CorsConfiguration()
-        configuration.allowedOrigins = listOf("https://appleid.apple.com") // 허용할 Origin
-        configuration.allowedMethods = listOf("GET", "POST", "OPTIONS") // 허용할 HTTP 메서드
-        configuration.allowedHeaders = listOf("*") // 허용할 요청 헤더
-        configuration.allowCredentials = true // 인증 정보 허용
+        val configuration = CorsConfiguration().apply {
+            allowedOrigins = listOf("https://appleid.apple.com")
+            allowedMethods = listOf("GET", "POST", "OPTIONS")
+            allowedHeaders = listOf("*")
+            allowCredentials = true
+        }
 
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", configuration) // 모든 경로에 적용
+        val source = UrlBasedCorsConfigurationSource().apply {
+            registerCorsConfiguration("/**", configuration)
+        }
         return source
     }
 }
