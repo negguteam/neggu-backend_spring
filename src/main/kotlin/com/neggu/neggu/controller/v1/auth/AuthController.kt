@@ -40,13 +40,4 @@ class AuthController(
             userRegisterRequest,
         )
     }
-
-    @PostMapping("/oauth/apple")
-    fun handleAppleOAuthCallback(
-        @RequestParam("code") code: String,
-        @RequestParam("id_token", required = false) idToken: String?, // ID 토큰 (선택적)
-    ): String {
-        log.nInfo("Apple Oauth -> code : $code idToken(not valid yet) : $idToken")
-        return code
-    }
 }

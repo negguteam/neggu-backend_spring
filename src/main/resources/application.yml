@@ -23,7 +23,6 @@ jasypt:
 
 cors:
   allowed-origin:
-    - https://appleid.apple.com
     - http://localhost:8080/
   max-age: 3600
 
