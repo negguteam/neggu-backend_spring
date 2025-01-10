@@ -43,7 +43,7 @@ oidc:
       aud: ENC(imDf1ErWsRKty6VPe8hRNwCLGmriM4nc)
     google:
       iss: https://accounts.google.com
-      aud: ENC(L0YDH1zPebW3v48+6d3IqFDaHPylWRQbNZXVvRGOaDbeGnkUnT+HXkrgsRjdkUb9zLHyP/r40GLNioCXzwYlfT3WhE2gUFZXO10MAczOw4E1aKDJnjzQAg==)
+      aud: ENC(79S7j3tcNCuw01QVX/MtGOyT5CyYEJyN1KcUPOl65dFslzjdhzrfbvW2cUHfHb7ElPKdEPlLODVGFNyB3uepF3IoRRxs+qYpE6liUoEacfuBvGQyor2m4g==)
 
 open-id-connect:
   kakao: https://kauth.kakao.com
