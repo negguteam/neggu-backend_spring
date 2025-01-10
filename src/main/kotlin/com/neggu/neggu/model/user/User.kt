@@ -13,7 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 data class User(
     @Id
     @get:JvmName("getUserId")
-    val id: ObjectId? = null,
+    override var id: ObjectId? = null,
     val email: String,
     val nickname: String,
     val gender: Gender,
@@ -27,8 +27,6 @@ data class User(
     val isDeleted: Boolean = false,
     val oauthProvider: OauthProvider = OauthProvider.KAKAO
 ) : AuditableEntity() {
-
-    override fun getId(): ObjectId? = id
 
     fun getAuthorities(): Collection<GrantedAuthority> {
         return role.split(",").map { SimpleGrantedAuthority(it) }

@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(
     name = "ClothRegisterRequest",
-    description = "옷 저장 성공 시",
+    description = "옷 저장 요청",
 )
 data class ClothRegisterRequest(
     @Schema(description = "Main category of the clothing", example = "TOP")

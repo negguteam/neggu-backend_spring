@@ -13,7 +13,7 @@ data class Cloth(
     @Id
     @Schema(description = "Primary key of the clothing item", example = "60b3b3b3d4c1f1b3b3b3d4c1")
     @get:JvmName("getClothId")
-    val id: ObjectId? = null,
+    override var id: ObjectId? = null,
     @Schema(description = "Default name generated from (brand + color + subCategory)", example = "아디다스 회색 후드")
     val name: String,
     @Schema(description = "Owner account identifier", example = "user123")
@@ -38,7 +38,4 @@ data class Cloth(
     val link: String?,
     @Schema(description = "Color code of the clothing", example = "#FFFFFF")
     val colorCode: String // 의상 저장시 추출
-) : AuditableEntity() {
-
-    override fun getId(): ObjectId? = id
-}
+) : AuditableEntity()

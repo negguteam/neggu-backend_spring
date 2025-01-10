@@ -1,11 +1,10 @@
-package com.neggu.neggu.service
+package com.neggu.neggu.service.cloth
 
 import com.neggu.neggu.config.LoggerConfig.log
 import com.neggu.neggu.config.LoggerConfig.nInfo
 import com.neggu.neggu.dto.cloth.ClothRegisterRequest
 import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.NotFoundException
-import com.neggu.neggu.exception.ServerException
 import com.neggu.neggu.exception.UnAuthorizedException
 import com.neggu.neggu.model.cloth.*
 import com.neggu.neggu.model.user.User
@@ -28,6 +27,7 @@ class ClothService(
     private val brandRepository: BrandRepository,
     private val s3Service: S3Service,
     private val userRepository: UserRepository,
+    private val imageColorService: ImageColorService
 ) {
 
     fun getClothPage(user: User, size:Int, page: Int, sortProperty : String = "createdAt"): Page<Cloth> {
@@ -42,6 +42,7 @@ class ClothService(
     @Transactional
     fun postCloth(user: User, images: MultipartFile, registerRequest: ClothRegisterRequest): Cloth {
         val fileName = s3Service.uploadFile(user, images)
+        val colorCode = imageColorService.pickColor(images)
         val cloth = Cloth(
             accountId = user.id!!,
             imageUrl = fileName,
@@ -54,7 +55,7 @@ class ClothService(
             isPurchase = registerRequest.isPurchase,
             link = registerRequest.link,
             name = "아직 구현 중입니다 (아디다스-회색-후드집업)", // TODO: 구현 필요
-            colorCode = "구현 중입니다. (#fffffff)" // TODO: 구현 필요
+            colorCode = colorCode
         )
 
         val savedCloth = clothRepository.save(cloth)
