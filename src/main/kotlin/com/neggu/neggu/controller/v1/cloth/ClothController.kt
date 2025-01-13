@@ -36,7 +36,7 @@ class ClothController(
         @RequestParam size: Int,
         @RequestParam page: Int
     ): Page<Cloth> {
-        return clothService.getClothPage(user, size, page)
+        return clothService.getClothes(user, size, page)
     }
 
     @AccessTokenRequire

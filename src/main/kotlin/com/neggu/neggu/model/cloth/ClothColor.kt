@@ -36,5 +36,5 @@ enum class ClothColor(
     KHAKI_BEIGE("카키 베이지", listOf(ColorGroup.GREEN, ColorGroup.BROWN), "Khaki Beige", "#7E7725"),
     CAMEL("브라운", listOf(ColorGroup.BROWN), "Camel", "#B58B3E"),
     BEIGE("베이지", listOf(ColorGroup.BROWN, ColorGroup.YELLOW), "Beige", "#D0B577"),
-    OTHERS("그 외", emptyList(), "Others",  null);
+    OTHERS("그 외", listOf(ColorGroup.NONE), "Others",  null);
 }

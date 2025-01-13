@@ -6,10 +6,7 @@ import com.neggu.neggu.dto.cloth.ClothRegisterRequest
 import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.ServerException
 import com.neggu.neggu.exception.UnAuthorizedException
-import com.neggu.neggu.model.cloth.Cloth
-import com.neggu.neggu.model.cloth.ClothBrand
-import com.neggu.neggu.model.cloth.ClothColor
-import com.neggu.neggu.model.cloth.RGBColor
+import com.neggu.neggu.model.cloth.*
 import com.neggu.neggu.model.user.User
 import com.neggu.neggu.repository.BrandRepository
 import com.neggu.neggu.repository.ClothRepository
@@ -34,9 +31,23 @@ class ClothService(
     private val userRepository: UserRepository,
 ) {
 
-    fun getClothPage(user: User, size:Int, page: Int, sortProperty : String = "createdAt"): Page<Cloth> {
+    fun getClothes(user: User, size:Int, page: Int, sortProperty : String = "createdAt"): Page<Cloth> {
         val pageable = PageRequest.of(page, size, Sort.by(sortProperty).descending())
         return clothRepository.findAllByAccountId(user.id, pageable)
+    }
+
+    fun getClothes(
+        user: User,
+        filterCategory: Category?,
+        colorGroup: ColorGroup,
+        size: Int,
+        page: Int,
+    ): Page<Cloth> {
+        val pageable = PageRequest.of(page, size, Sort.by("createdAt").descending())
+        if (filterCategory == null) {
+            return clothRepository.findAllByAccountIdAndColorIn(user.id, colorGroup.getColors(), pageable)
+        }
+        return clothRepository.findAllByAccountIdAndCategoryAndColorIn(user.id, filterCategory, colorGroup.getColors(), pageable)
     }
 
     fun getCloth(id: ObjectId): Cloth {
@@ -87,4 +98,5 @@ class ClothService(
                     (rgb1.blue - rgb2.blue).toDouble().pow(2)
         )
     }
+
 }
