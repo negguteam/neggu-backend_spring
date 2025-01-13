@@ -1,9 +1,6 @@
 package com.neggu.neggu.controller.v1.auth
 
-import com.neggu.neggu.dto.user.IdTokenRequest
-import com.neggu.neggu.dto.user.SocialLoginResponse
-import com.neggu.neggu.dto.user.TokenResponse
-import com.neggu.neggu.dto.user.UserRegisterRequest
+import com.neggu.neggu.dto.user.*
 import com.neggu.neggu.model.auth.RegisterClaims
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
@@ -13,6 +10,8 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.PostMapping
 
 
 @Tag(name = "02. [인증] (토큰 필요 X)")
@@ -64,4 +63,7 @@ interface AuthApi {
         userRegisterRequest: UserRegisterRequest,
     ): TokenResponse
 
+    @Operation(summary = "닉네임 중복 확인 API")
+    @PostMapping("/check/nickname")
+    fun checkNickname(duplicateNicknameRequest: DuplicateNicknameRequest): DuplicateNicknameResponse
 }

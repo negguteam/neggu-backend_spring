@@ -3,10 +3,7 @@ package com.neggu.neggu.controller.v1.auth
 import com.neggu.neggu.annotation.PendingUser
 import com.neggu.neggu.config.LoggerConfig.log
 import com.neggu.neggu.config.LoggerConfig.nInfo
-import com.neggu.neggu.dto.user.IdTokenRequest
-import com.neggu.neggu.dto.user.SocialLoginResponse
-import com.neggu.neggu.dto.user.TokenResponse
-import com.neggu.neggu.dto.user.UserRegisterRequest
+import com.neggu.neggu.dto.user.*
 import com.neggu.neggu.model.auth.RegisterClaims
 import com.neggu.neggu.model.auth.OauthProvider
 import com.neggu.neggu.service.user.SocialLoginService
@@ -39,5 +36,12 @@ class AuthController(
             OauthProvider.from(registerClaims.provider),
             userRegisterRequest,
         )
+    }
+
+    @PostMapping("/check/nickname")
+    override fun checkNickname(
+        @RequestBody duplicateNicknameRequest: DuplicateNicknameRequest,
+    ): DuplicateNicknameResponse {
+        return userRegisterService.checkNickname(duplicateNicknameRequest.nickName)
     }
 }

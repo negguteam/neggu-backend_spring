@@ -8,4 +8,5 @@ import org.springframework.data.mongodb.repository.MongoRepository
 interface UserRepository: MongoRepository<User, ObjectId> {
 
     fun findByEmailAndOauthProvider(email: String, oauthProvider: OauthProvider): User?
+    fun existsByNickname(nickname: String): Boolean
 }

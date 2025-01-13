@@ -1,7 +1,10 @@
 package com.neggu.neggu.service.user
 
+import com.neggu.neggu.dto.user.DuplicateNicknameResponse
 import com.neggu.neggu.dto.user.TokenResponse
 import com.neggu.neggu.dto.user.UserRegisterRequest
+import com.neggu.neggu.exception.ErrorType
+import com.neggu.neggu.exception.ServerException
 import com.neggu.neggu.model.auth.OauthProvider
 import com.neggu.neggu.model.auth.RefreshToken
 import com.neggu.neggu.model.user.User
@@ -24,6 +27,7 @@ class UserRegisterService(
         provider: OauthProvider,
         userRegisterRequest: UserRegisterRequest,
     ): TokenResponse {
+        if (checkDuplicateNickname(userRegisterRequest.nickname)) { throw ServerException(ErrorType.DuplicateNickanme) }
         val user = userRepository.save(
             User(
                 email = email,
@@ -45,5 +49,14 @@ class UserRegisterService(
             refreshToken = refreshToken,
             refreshTokenExpiresIn = refreshTokenExpiresIn,
         )
+    }
+
+    fun checkNickname(nickname: String): DuplicateNicknameResponse {
+        val isDuplicate = checkDuplicateNickname(nickname)
+        return DuplicateNicknameResponse(isDuplicate)
+    }
+
+    private fun checkDuplicateNickname(nickname: String): Boolean {
+        return userRepository.existsByNickname(nickname)
     }
 }

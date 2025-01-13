@@ -47,6 +47,7 @@ sealed class ErrorType(
 
     // User
     data object UserNotFound : ErrorType(HttpStatus.NOT_FOUND, LogLevel.DEBUG, "존재하지 않은 사용자입니다.")
+    data object DuplicateNickanme : ErrorType(HttpStatus.NOT_FOUND, LogLevel.ERROR, "중복된 닉네임입니다.")
 
     // Cloth
     data object NotFoundCloth : ErrorType(HttpStatus.NOT_FOUND, LogLevel.DEBUG, "존재하지 않는 옷입니다.")
