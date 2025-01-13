@@ -38,5 +38,7 @@ data class Cloth(
     @Schema(description = "Link to purchase the clothing item", example = "https://example.com/item/12345")
     val link: String?,
     @Schema(description = "Color code of the clothing", example = "#FFFFFF")
-    val colorCode: String, // 의상 저장시 추출
+    val colorCode: String,
+    @Schema(description = "ClothColor of the clothing", example = "PURPLE")
+    val color: ClothColor = ClothColor.OTHERS,
 ) : AuditableEntity()

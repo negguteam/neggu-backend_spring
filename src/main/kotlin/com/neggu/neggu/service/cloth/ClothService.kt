@@ -4,9 +4,12 @@ import com.neggu.neggu.config.LoggerConfig.log
 import com.neggu.neggu.config.LoggerConfig.nInfo
 import com.neggu.neggu.dto.cloth.ClothRegisterRequest
 import com.neggu.neggu.exception.ErrorType
-import com.neggu.neggu.exception.NotFoundException
+import com.neggu.neggu.exception.ServerException
 import com.neggu.neggu.exception.UnAuthorizedException
-import com.neggu.neggu.model.cloth.*
+import com.neggu.neggu.model.cloth.Cloth
+import com.neggu.neggu.model.cloth.ClothBrand
+import com.neggu.neggu.model.cloth.ClothColor
+import com.neggu.neggu.model.cloth.RGBColor
 import com.neggu.neggu.model.user.User
 import com.neggu.neggu.repository.BrandRepository
 import com.neggu.neggu.repository.ClothRepository
@@ -20,6 +23,8 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 @Service
 class ClothService(
@@ -35,13 +40,14 @@ class ClothService(
     }
 
     fun getCloth(id: ObjectId): Cloth {
-        return clothRepository.findByIdOrNull(id) ?: throw NotFoundException(ErrorType.NotFoundCloth)
+        return clothRepository.findByIdOrNull(id) ?: throw ServerException(ErrorType.NotFoundCloth)
     }
 
     @Transactional
     fun postCloth(user: User, images: MultipartFile, registerRequest: ClothRegisterRequest): Cloth {
+        val clothColor = findClothColor(registerRequest.colorCode)
         val fileName = s3Service.uploadFile(user, images)
-        val cloth = registerRequest.toCloth(user.id!!, fileName)
+        val cloth = registerRequest.toCloth(user.id!!, fileName, clothColor)
 
         val savedCloth = clothRepository.save(cloth)
         userRepository.save(user.copy(clothes = user.clothes + savedCloth.id!!))
@@ -52,7 +58,7 @@ class ClothService(
 
     @Transactional
     fun deleteCloth(user: User, objectId: ObjectId): Cloth {
-        val cloth = clothRepository.findByIdOrNull(objectId) ?: throw NotFoundException(ErrorType.NotFoundCloth)
+        val cloth = clothRepository.findByIdOrNull(objectId) ?: throw ServerException(ErrorType.NotFoundCloth)
         if (cloth.accountId != user.id) { throw UnAuthorizedException(ErrorType.InvalidIdToken) }
         clothRepository.delete(cloth)
         s3Service.deleteFile(cloth.imageUrl)
@@ -64,5 +70,21 @@ class ClothService(
 
     fun getBrands(): List<ClothBrand> {
         return brandRepository.findAll()
+    }
+
+    private fun findClothColor(hex: String): ClothColor {
+        val inputRgb = RGBColor.fromHex(hex)
+        return ClothColor.entries.toTypedArray().minBy { color ->
+            val colorHex = color.hex ?: return@minBy Double.MAX_VALUE
+            calculateEuclideanDistance(inputRgb, RGBColor.fromHex(colorHex))
+        }
+    }
+
+    private fun calculateEuclideanDistance(rgb1: RGBColor, rgb2: RGBColor): Double {
+        return sqrt(
+            (rgb1.red - rgb2.red).toDouble().pow(2) +
+                    (rgb1.green - rgb2.green).toDouble().pow(2) +
+                    (rgb1.blue - rgb2.blue).toDouble().pow(2)
+        )
     }
 }

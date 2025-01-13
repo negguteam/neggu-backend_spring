@@ -11,7 +11,7 @@ import org.bson.types.ObjectId
 data class ClothRegisterRequest(
     @Schema(description = "Color code of the clothing", example = "#FFFFFF")
     val colorCode: String,
-    @Schema(description = "Name of the clothing", example = "Adidas Gray Hoodie")
+    @Schema(description = "Name of the clothing", example = "아디다스 회색 후드")
     val name: String,
     @Schema(description = "Main category of the clothing", example = "TOP")
     val category: Category,
@@ -31,7 +31,7 @@ data class ClothRegisterRequest(
     val link: String?,
 ) {
 
-    fun toCloth(accountId : ObjectId, imageUrl: String?): Cloth {
+    fun toCloth(accountId : ObjectId, imageUrl: String?, clothColor: ClothColor): Cloth {
         return Cloth(
             accountId = accountId,
             imageUrl = imageUrl,
@@ -45,6 +45,7 @@ data class ClothRegisterRequest(
             link = link,
             name = name,
             colorCode = colorCode,
+            color = clothColor,
         )
     }
 }
