@@ -1,5 +1,6 @@
 package com.neggu.neggu.model.cloth
 
+import com.neggu.neggu.dto.cloth.ClothRegisterRequest
 import com.neggu.neggu.model.base.AuditableEntity
 import io.swagger.v3.oas.annotations.media.Schema
 import org.bson.types.ObjectId
@@ -37,5 +38,5 @@ data class Cloth(
     @Schema(description = "Link to purchase the clothing item", example = "https://example.com/item/12345")
     val link: String?,
     @Schema(description = "Color code of the clothing", example = "#FFFFFF")
-    val colorCode: String // 의상 저장시 추출
+    val colorCode: String, // 의상 저장시 추출
 ) : AuditableEntity()
