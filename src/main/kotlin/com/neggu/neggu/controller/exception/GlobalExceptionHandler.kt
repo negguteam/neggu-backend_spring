@@ -7,27 +7,38 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.servlet.resource.NoResourceFoundException
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception::class)
-    private fun handleAllException(exception: Exception): ResponseEntity<ErrorResponse> {
+    private fun handleException(exception: Exception): ResponseEntity<ErrorResponse> {
         val errorType = ErrorType.ServerError.of(exception)
-        log.nError(exception)
         return ResponseEntity
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(ErrorResponse.from(
-                errorType = errorType,
-                message = exception.toString()
-            ))
+            .body(
+                ErrorResponse.from(
+                    errorType = errorType,
+                    message = exception.toString()
+                )
+            )
+    }
+
+    @ExceptionHandler(NoResourceFoundException::class)
+    private fun handleNoResourceFoundException(exception: NoResourceFoundException): ResponseEntity<ErrorResponse> {
+        return handleException(exception)
+    }
+
+    @ExceptionHandler(Exception::class)
+    private fun handleAllException(exception: Exception): ResponseEntity<ErrorResponse> {
+        log.nError(exception)
+        return handleException(exception)
     }
 
     @ExceptionHandler(BaseException::class)
     private fun handleBaseException(exception: BaseException): ResponseEntity<ErrorResponse> {
-        val errorType = exception.errorType
         log.nError(exception)
-
+        val errorType = exception.errorType
         return ResponseEntity
             .status(errorType.status)
             .body(ErrorResponse.from(errorType))
