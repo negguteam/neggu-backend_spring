@@ -34,7 +34,7 @@ class LoginUserArgumentResolver(
                 ?: throw UnAuthorizedException(ErrorType.Unauthorized)
         val userClaims: UserClaims = value as UserClaims
         return userRepository.findById(userClaims.id)
-            .orElseThrow { NotFoundException(ErrorType.UserNotFound) }
+            .orElseThrow { ServerException(ErrorType.UserNotFound) }
     }
 
     companion object {

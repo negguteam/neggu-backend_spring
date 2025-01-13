@@ -1,7 +1,7 @@
 package com.neggu.neggu.service.user
 
 import com.neggu.neggu.exception.ErrorType
-import com.neggu.neggu.exception.NotFoundException
+import com.neggu.neggu.exception.ServerException
 import com.neggu.neggu.model.user.User
 import com.neggu.neggu.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
@@ -16,7 +16,7 @@ class UserWithdrawService(
 
     fun withdraw(loginUser: User) {
         val user: User =
-            userRepository.findByIdOrNull(loginUser.id) ?: throw NotFoundException(ErrorType.UserNotFound)
+            userRepository.findByIdOrNull(loginUser.id) ?: throw ServerException(ErrorType.UserNotFound)
         userRepository.delete(user)
     }
 }

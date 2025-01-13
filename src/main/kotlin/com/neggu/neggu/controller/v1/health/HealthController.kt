@@ -1,7 +1,7 @@
 package com.neggu.neggu.controller.v1.health
 
 import com.neggu.neggu.exception.ErrorType
-import com.neggu.neggu.exception.NotFoundException
+import com.neggu.neggu.exception.ServerException
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -25,6 +25,6 @@ class HealthController : HealthApi {
 
     @GetMapping("/known-error")
     override fun knownError(): HealthApi.HealthResponse {
-        throw NotFoundException(ErrorType.UserNotFound)
+        throw ServerException(ErrorType.UserNotFound)
     }
 }
