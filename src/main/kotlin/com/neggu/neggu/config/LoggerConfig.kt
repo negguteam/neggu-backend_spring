@@ -123,9 +123,11 @@ object LoggerConfig {
                 )
             )
             val entity = HttpEntity(payload, slackHeaders)
-            restTemplate.exchange(slackProperties.postChatUrl, HttpMethod.POST, entity, String::class.java)
+            val result = restTemplate.exchange(slackProperties.postChatUrl, HttpMethod.POST, entity, String::class.java)
+            log.info { "Slack message sent successfully. ${result.body}" }
         } catch (e: Exception) {
-            log.nError("Failed to send slack message. ${e.message}")
+            e.printStackTrace()
+            log.error { "Failed to send slack message. ${e.message}" }
         }
     }
 
