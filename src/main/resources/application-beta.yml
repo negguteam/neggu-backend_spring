@@ -13,5 +13,5 @@ auth:
       expiry: 1209600000 # 14days millseconds
 
 swagger:
-  sever:
+  server:
     url: https://neggu.site
