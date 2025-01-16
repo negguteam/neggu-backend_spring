@@ -11,3 +11,7 @@ auth:
     refresh:
       secret: localrefreshsecretlocalrefreshsecretlocalrefreshsecretlocalrefreshsecretlocalrefreshsecret
       expiry: 1209600000 # 14days millseconds
+
+swagger:
+  sever:
+    url: https://neggu.site

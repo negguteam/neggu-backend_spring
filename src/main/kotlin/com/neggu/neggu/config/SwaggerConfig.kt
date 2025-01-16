@@ -18,11 +18,16 @@ import io.swagger.v3.oas.models.media.Content
 import io.swagger.v3.oas.models.media.MediaType
 import io.swagger.v3.oas.models.responses.ApiResponse
 import io.swagger.v3.oas.models.responses.ApiResponses
+import io.swagger.v3.oas.models.servers.Server
+import org.springframework.beans.factory.annotation.Value
 import kotlin.reflect.KClass
 
 
 @Configuration
-class OpenApiConfig {
+class OpenApiConfig(
+    @Value("\${swagger.server.url}")
+    private val swaggerServerUrl: String,
+) {
 
 
     companion object {
@@ -35,6 +40,9 @@ class OpenApiConfig {
             .components(swaggerComponent())
             .addSecurityItem(securityItem())
             .info(swaggerInfo())
+            .addServersItem(Server().apply {
+                url = swaggerServerUrl
+            })
     }
 
     @Bean
