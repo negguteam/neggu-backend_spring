@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.logging.LogLevel
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
+import org.springframework.core.env.Environment
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
@@ -21,6 +22,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.Executors
+import kotlin.properties.Delegates
 
 
 @Component
@@ -29,6 +31,7 @@ object LoggerConfig {
 
     private lateinit var slackProperties: SlackProperties
     private lateinit var slackHeaders: HttpHeaders
+    private var enable by Delegates.notNull<Boolean>()
 
     private val restTemplate = RestTemplate()
     private val MAX_LOG_SIZE = 1_000
@@ -37,7 +40,11 @@ object LoggerConfig {
     private val slackScope = CoroutineScope(logDispatcher)
 
     @Autowired
-    fun init(properties: SlackProperties) {
+    fun init(
+        properties: SlackProperties,
+        environment: Environment
+     ) {
+        enable = environment.activeProfiles.any { it == "real" || it == "beta" }
         slackProperties = properties
         slackHeaders = HttpHeaders().apply {
             contentType = MediaType.APPLICATION_JSON
@@ -96,6 +103,7 @@ object LoggerConfig {
     }
 
     private fun sendSlackMessage(message:String, stackTrace: String?, logLevel: LogLevel) = slackScope.launch {
+        if (enable) return@launch
         try {
             val headerBlock = getHeaderBlock(logLevel)
             val timeBlock = getTimeBlock()
