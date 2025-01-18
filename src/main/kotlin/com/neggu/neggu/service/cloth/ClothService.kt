@@ -99,4 +99,10 @@ class ClothService(
         )
     }
 
+    fun postCloth(user: User, cloth:Cloth): Cloth {
+        if (cloth.accountId != user.id) { throw UnAuthorizedException(ErrorType.InvalidIdToken) }
+        return clothRepository.save(cloth).also {
+            log.nInfo("Cloth(${it.id}) updated by user ${user.id}\n Cloth Info : $it")
+        }
+    }
 }

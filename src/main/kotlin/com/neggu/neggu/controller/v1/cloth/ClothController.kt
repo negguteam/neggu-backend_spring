@@ -24,7 +24,8 @@ class ClothController(
     @GetMapping("/{id}")
     override fun getCloth(
         @LoginUser user: User,
-        @PathVariable @Parameter(description = "옷 ID") id: String
+        @PathVariable
+        @Parameter(description = "옷 ID") id: String
     ): Cloth {
         return clothService.getCloth(ObjectId(id))
     }
@@ -44,12 +45,21 @@ class ClothController(
         consumes = [MediaType.MULTIPART_FORM_DATA_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    override fun postCloth(
+    override fun registerCloth(
         @LoginUser user: User,
         @RequestParam(required = false) image: MultipartFile,
         @RequestPart clothRegisterRequest: ClothRegisterRequest,
     ): Cloth {
         return clothService.postCloth(user, image, clothRegisterRequest)
+    }
+
+    @AccessTokenRequire
+    @PostMapping("/upsert")
+    override fun upsertCloth(
+        @LoginUser user: User,
+        @PathVariable cloth: Cloth
+    ): Cloth {
+        return clothService.postCloth(user, cloth)
     }
 
     @AccessTokenRequire

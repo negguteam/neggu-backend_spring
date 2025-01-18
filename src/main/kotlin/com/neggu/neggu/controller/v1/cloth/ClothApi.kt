@@ -56,10 +56,26 @@ interface ClothApi {
             )
         ]
     )
-    fun postCloth(
+    fun registerCloth(
         @Schema(hidden = true) user: User,
         image: MultipartFile,
         clothRegisterRequest: ClothRegisterRequest
+    ): Cloth
+
+
+    @Operation(summary = "옷 수정 API")
+    @ApiResponse(
+        responseCode = "200",
+        description = "옷 수정 성공",
+        content = [
+            Content(
+                schema = Schema(implementation = Cloth::class)
+            )
+        ]
+    )
+    fun upsertCloth(
+        @Schema(hidden = true) user: User,
+        cloth: Cloth
     ): Cloth
 
     @Operation(summary = "옷 삭제 API")
