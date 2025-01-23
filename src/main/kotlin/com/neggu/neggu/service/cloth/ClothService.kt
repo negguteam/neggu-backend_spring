@@ -31,23 +31,9 @@ class ClothService(
     private val userRepository: UserRepository,
 ) {
 
-    fun getClothes(user: User, size:Int, page: Int, sortProperty : String = "createdAt"): Page<Cloth> {
+    fun getClothes(user: User, category: Category?, colorGroup: ColorGroup?, mood: Mood?, size: Int, page: Int, sortProperty : String = "createdAt"): Page<Cloth> {
         val pageable = PageRequest.of(page, size, Sort.by(sortProperty).descending())
-        return clothRepository.findAllByAccountId(user.id, pageable)
-    }
-
-    fun getClothes(
-        user: User,
-        filterCategory: Category?,
-        colorGroup: ColorGroup,
-        size: Int,
-        page: Int,
-    ): Page<Cloth> {
-        val pageable = PageRequest.of(page, size, Sort.by("createdAt").descending())
-        if (filterCategory == null) {
-            return clothRepository.findAllByAccountIdAndColorIn(user.id, colorGroup.getColors(), pageable)
-        }
-        return clothRepository.findAllByAccountIdAndCategoryAndColorIn(user.id, filterCategory, colorGroup.getColors(), pageable)
+        return clothRepository.findClothesDynamic(user.id!!, category, colorGroup?.getColors(), mood, pageable)
     }
 
     fun getCloth(id: ObjectId): Cloth {

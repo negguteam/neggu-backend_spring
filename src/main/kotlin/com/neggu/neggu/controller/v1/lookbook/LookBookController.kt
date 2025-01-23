@@ -14,9 +14,8 @@ class LookBookController(
 ) : LookBookApi {
 
     override fun getClothes(user: User, filterCategory: Category?, colorGroup: ColorGroup, size: Int, page: Int): Page<Cloth> {
-        return clothService.getClothes(user, filterCategory, colorGroup, size, page)
+        // TODO
+        return Page.empty()
     }
-
-
 
 }

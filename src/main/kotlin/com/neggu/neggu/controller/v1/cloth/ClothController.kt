@@ -3,8 +3,7 @@ package com.neggu.neggu.controller.v1.cloth
 import com.neggu.neggu.annotation.AccessTokenRequire
 import com.neggu.neggu.config.LoginUser
 import com.neggu.neggu.dto.cloth.ClothRegisterRequest
-import com.neggu.neggu.model.cloth.Cloth
-import com.neggu.neggu.model.cloth.ClothBrand
+import com.neggu.neggu.model.cloth.*
 import com.neggu.neggu.model.user.User
 import com.neggu.neggu.service.cloth.ClothService
 import io.swagger.v3.oas.annotations.Parameter
@@ -34,10 +33,13 @@ class ClothController(
     @GetMapping("/page")
     override fun getClothes(
         @LoginUser user: User,
+        @RequestParam(required = false) category: Category?,
+        @RequestParam(required = false) colorGroup: ColorGroup?,
+        @RequestParam(required = false) mood: Mood?,
         @RequestParam size: Int,
         @RequestParam page: Int
     ): Page<Cloth> {
-        return clothService.getClothes(user, size, page)
+        return clothService.getClothes(user, category, colorGroup, mood, size, page)
     }
 
     @AccessTokenRequire
