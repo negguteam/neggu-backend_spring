@@ -73,7 +73,9 @@ class ClothController(
 
     @AccessTokenRequire
     @GetMapping("/brands")
-    override fun getBrands(): List<ClothBrand> {
-        return clothService.getBrands()
+    override fun getBrands(
+        @RequestParam query: String?
+    ): List<ClothBrand> {
+        return clothService.getBrands(query)
     }
 }

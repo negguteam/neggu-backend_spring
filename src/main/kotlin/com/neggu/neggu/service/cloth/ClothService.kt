@@ -79,7 +79,10 @@ class ClothService(
         }
     }
 
-    fun getBrands(): List<ClothBrand> {
+    fun getBrands(query: String?): List<ClothBrand> {
+        if (query != null) {
+            return brandRepository.findByNameContaining(query)
+        }
         return brandRepository.findAll()
     }
 

@@ -93,5 +93,5 @@ interface ClothApi {
         responseCode = "200",
         description = "브랜드 목록 조회 성공"
     )
-    fun getBrands(): List<ClothBrand>
+    fun getBrands(query: String?): List<ClothBrand>
 }
