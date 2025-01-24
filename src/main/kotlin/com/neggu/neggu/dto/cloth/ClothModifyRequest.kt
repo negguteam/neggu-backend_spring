@@ -1,6 +1,7 @@
 package com.neggu.neggu.dto.cloth
 
 import com.neggu.neggu.model.cloth.*
+import com.neggu.neggu.util.toObjectId
 import io.swagger.v3.oas.annotations.media.Schema
 import org.bson.types.ObjectId
 
@@ -36,8 +37,8 @@ data class ClothModifyRequest(
 
     fun toCloth(clothColor: ClothColor): Cloth {
         return Cloth(
-            id = ObjectId(id),
-            accountId = ObjectId(accountId),
+            id = id.toObjectId(),
+            accountId = accountId.toObjectId(),
             imageUrl = imageUrl,
             category = category,
             subCategory = subCategory,

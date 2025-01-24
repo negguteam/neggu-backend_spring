@@ -7,6 +7,7 @@ import com.neggu.neggu.dto.cloth.ClothRegisterRequest
 import com.neggu.neggu.model.cloth.*
 import com.neggu.neggu.model.user.User
 import com.neggu.neggu.service.cloth.ClothService
+import com.neggu.neggu.util.toObjectId
 import io.swagger.v3.oas.annotations.Parameter
 import org.bson.types.ObjectId
 import org.springframework.data.domain.Page
@@ -27,7 +28,7 @@ class ClothController(
         @PathVariable
         @Parameter(description = "옷 ID") id: String
     ): Cloth {
-        return clothService.getCloth(ObjectId(id))
+        return clothService.getCloth(id.toObjectId())
     }
 
     @AccessTokenRequire
@@ -72,7 +73,7 @@ class ClothController(
         @LoginUser user: User,
         @PathVariable id: String
     ): Cloth {
-        return clothService.deleteCloth(user, ObjectId(id))
+        return clothService.deleteCloth(user, id.toObjectId())
     }
 
     @AccessTokenRequire

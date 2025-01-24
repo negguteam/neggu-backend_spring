@@ -49,8 +49,12 @@ sealed class ErrorType(
     data object UserNotFound : ErrorType(HttpStatus.NOT_FOUND, LogLevel.DEBUG, "존재하지 않은 사용자입니다.")
     data object DuplicateNickanme : ErrorType(HttpStatus.NOT_FOUND, LogLevel.ERROR, "중복된 닉네임입니다.")
 
-    // Cloth
+    // Cloth, Lookbook
     data object NotFoundCloth : ErrorType(HttpStatus.NOT_FOUND, LogLevel.DEBUG, "존재하지 않는 옷입니다.")
+    data object NotFoundLookBook : ErrorType(HttpStatus.NOT_FOUND, LogLevel.DEBUG, "존재하지 않는 룩북입니다.")
+
+    // ObjectId
+    data object InvalidObjectId : ErrorType(HttpStatus.BAD_REQUEST, LogLevel.DEBUG, "유효하지 않은 ObjectId입니다.")
 
     // CLIENT
     data object OpenApiCallException : ErrorType(HttpStatus.BAD_GATEWAY, LogLevel.WARN, "OpenAPI 호출에 실패했습니다.")

@@ -13,6 +13,7 @@ import com.neggu.neggu.repository.BrandRepository
 import com.neggu.neggu.repository.ClothRepository
 import com.neggu.neggu.repository.UserRepository
 import com.neggu.neggu.service.aws.S3Service
+import com.neggu.neggu.util.toObjectId
 import org.bson.types.ObjectId
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -41,9 +42,9 @@ class ClothService(
     }
 
     @Transactional
-    fun registerCloth(user: User, images: MultipartFile, registerRequest: ClothRegisterRequest): Cloth {
+    fun registerCloth(user: User, image: MultipartFile, registerRequest: ClothRegisterRequest): Cloth {
         val clothColor = colorFinder.findColor(registerRequest.colorCode)
-        val fileName = s3Service.uploadFile(user, images)
+        val fileName = s3Service.uploadFile(user, image)
         val cloth = registerRequest.toCloth(user.id!!, fileName, clothColor)
 
         val savedCloth = clothRepository.save(cloth)
@@ -55,7 +56,7 @@ class ClothService(
 
     @Transactional
     fun modifyCloth(user: User, clothRegisterRequest: ClothModifyRequest): Cloth {
-        val accountId = ObjectId(clothRegisterRequest.accountId)
+        val accountId = clothRegisterRequest.accountId.toObjectId()
         if (accountId != user.id) { throw UnAuthorizedException(ErrorType.InvalidIdToken) }
         val clothColor = colorFinder.findColor(clothRegisterRequest.colorCode)
 

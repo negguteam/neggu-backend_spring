@@ -1,6 +1,6 @@
 package com.neggu.neggu.model.lookbook
 
-import com.mongodb.client.model.geojson.Position
+import com.neggu.neggu.dto.lookbook.LookBookCloth
 import com.neggu.neggu.model.base.AuditableEntity
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
@@ -11,8 +11,10 @@ data class LookBook(
     @Id
     @get:JvmName("getLookBookId")
     override var id: ObjectId? = null,
-    val accountId: String,
-    val clothes: List<String>,
+    val accountId: ObjectId,
+//    val title: String,
+    val imageURL: String?,
+    val lookBookClothes: List<LookBookCloth>,
 ) : AuditableEntity() {
 
     override fun getId(): ObjectId? = id
