@@ -19,8 +19,6 @@ import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.util.concurrent.Executors
 import kotlin.properties.Delegates
 
@@ -57,7 +55,7 @@ object LoggerConfig {
         "elements" to listOf(
             mapOf(
                 "type" to "mrkdwn",
-                "text" to "Sent at: ${LocalDateTime.now(Constants.timeZone).format(Constants.defaultDateFormatter)}"
+                "text" to "Sent at: ${LocalDateTime.now(Constants.DEFAULT_TIME_ZONE).format(Constants.DEFAULT_DATETIME_FORMATTER)}"
             )
         )
     )

@@ -44,7 +44,7 @@ class S3Service(
 
     fun createFileName(user: User, originalFilename: String?): String {
         val extension = originalFilename?.substringAfterLast(".") ?: throw ServerException(ErrorType.BadRequest)
-        val currentTime = LocalDateTime.now(Constants.timeZone).format(Constants.defaultDateFormatter)
+        val currentTime = LocalDateTime.now(Constants.DEFAULT_TIME_ZONE).format(Constants.DEFAULT_DATETIME_FORMATTER)
         return "${user.id}/${currentTime}_${UUID.randomUUID()}.${extension}"
     }
 
