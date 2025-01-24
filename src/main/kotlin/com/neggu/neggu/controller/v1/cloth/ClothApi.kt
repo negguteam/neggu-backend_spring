@@ -2,6 +2,7 @@ package com.neggu.neggu.controller.v1.cloth
 
 import com.neggu.neggu.annotation.ApiErrorResponse
 import com.neggu.neggu.annotation.ApiErrorResponses
+import com.neggu.neggu.dto.cloth.ClothModifyRequest
 import com.neggu.neggu.dto.cloth.ClothRegisterRequest
 import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.model.cloth.*
@@ -13,7 +14,6 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.data.domain.Page
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.multipart.MultipartFile
 
 @Tag(name = "03. [옷장(의상)]")
@@ -76,9 +76,9 @@ interface ClothApi {
             )
         ]
     )
-    fun upsertCloth(
+    fun modifyCloth(
         @Schema(hidden = true) user: User,
-        cloth: Cloth
+        clothModifyRequest: ClothModifyRequest
     ): Cloth
 
     @Operation(summary = "옷 삭제 API")

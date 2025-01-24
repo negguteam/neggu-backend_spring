@@ -2,6 +2,7 @@ package com.neggu.neggu.controller.v1.cloth
 
 import com.neggu.neggu.annotation.AccessTokenRequire
 import com.neggu.neggu.config.LoginUser
+import com.neggu.neggu.dto.cloth.ClothModifyRequest
 import com.neggu.neggu.dto.cloth.ClothRegisterRequest
 import com.neggu.neggu.model.cloth.*
 import com.neggu.neggu.model.user.User
@@ -52,16 +53,17 @@ class ClothController(
         @RequestParam(required = false) image: MultipartFile,
         @RequestPart clothRegisterRequest: ClothRegisterRequest,
     ): Cloth {
-        return clothService.postCloth(user, image, clothRegisterRequest)
+        return clothService.registerCloth(user, image, clothRegisterRequest)
     }
 
+
     @AccessTokenRequire
-    @PostMapping("/upsert")
-    override fun upsertCloth(
+    @PostMapping("/modify")
+    override fun modifyCloth(
         @LoginUser user: User,
-        @PathVariable cloth: Cloth
+        @RequestBody clothModifyRequest: ClothModifyRequest
     ): Cloth {
-        return clothService.postCloth(user, cloth)
+        return clothService.modifyCloth(user, clothModifyRequest)
     }
 
     @AccessTokenRequire

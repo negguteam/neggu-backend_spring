@@ -2,6 +2,7 @@ package com.neggu.neggu.service.cloth
 
 import com.neggu.neggu.config.LoggerConfig.log
 import com.neggu.neggu.config.LoggerConfig.nInfo
+import com.neggu.neggu.dto.cloth.ClothModifyRequest
 import com.neggu.neggu.dto.cloth.ClothRegisterRequest
 import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.ServerException
@@ -40,7 +41,7 @@ class ClothService(
     }
 
     @Transactional
-    fun postCloth(user: User, images: MultipartFile, registerRequest: ClothRegisterRequest): Cloth {
+    fun registerCloth(user: User, images: MultipartFile, registerRequest: ClothRegisterRequest): Cloth {
         val clothColor = colorFinder.findColor(registerRequest.colorCode)
         val fileName = s3Service.uploadFile(user, images)
         val cloth = registerRequest.toCloth(user.id!!, fileName, clothColor)
@@ -48,7 +49,19 @@ class ClothService(
         val savedCloth = clothRepository.save(cloth)
         userRepository.save(user.copy(clothes = user.clothes + savedCloth.id!!))
         return savedCloth.also {
-            log.nInfo("Save Cloth(${it.id}) saved by user ${user.id}\n Cloth Info : $it")
+            log.nInfo("[Register] Cloth(${it.id}) by user ${user.id}\n Cloth Info : $it")
+        }
+    }
+
+    @Transactional
+    fun modifyCloth(user: User, clothRegisterRequest: ClothModifyRequest): Cloth {
+        val accountId = ObjectId(clothRegisterRequest.accountId)
+        if (accountId != user.id) { throw UnAuthorizedException(ErrorType.InvalidIdToken) }
+        val clothColor = colorFinder.findColor(clothRegisterRequest.colorCode)
+
+        val savedCloth = clothRepository.save(clothRegisterRequest.toCloth(clothColor))
+        return clothRepository.save(savedCloth).also {
+            log.nInfo("[Update] Cloth(${it.id}) by user ${user.id}\n Cloth Info : $it")
         }
     }
 
@@ -71,7 +84,7 @@ class ClothService(
         return brandRepository.findAll()
     }
 
-    fun postCloth(user: User, cloth:Cloth): Cloth {
+    fun registerCloth(user: User, cloth:Cloth): Cloth {
         if (cloth.accountId != user.id) { throw UnAuthorizedException(ErrorType.InvalidIdToken) }
         return clothRepository.save(cloth).also {
             log.nInfo("Cloth(${it.id}) updated by user ${user.id}\n Cloth Info : $it")
