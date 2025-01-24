@@ -20,8 +20,6 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
-import kotlin.math.pow
-import kotlin.math.sqrt
 
 @Service
 class ClothService(
@@ -29,6 +27,7 @@ class ClothService(
     private val brandRepository: BrandRepository,
     private val s3Service: S3Service,
     private val userRepository: UserRepository,
+    private val colorFinder: ColorFinder
 ) {
 
     fun getClothes(user: User, category: Category?, colorGroup: ColorGroup?, mood: Mood?, size: Int, page: Int, sortProperty : String = "createdAt"): Page<Cloth> {
@@ -42,7 +41,7 @@ class ClothService(
 
     @Transactional
     fun postCloth(user: User, images: MultipartFile, registerRequest: ClothRegisterRequest): Cloth {
-        val clothColor = findClothColor(registerRequest.colorCode)
+        val clothColor = colorFinder.findColor(registerRequest.colorCode)
         val fileName = s3Service.uploadFile(user, images)
         val cloth = registerRequest.toCloth(user.id!!, fileName, clothColor)
 
@@ -70,22 +69,6 @@ class ClothService(
             return brandRepository.findByNameContaining(query)
         }
         return brandRepository.findAll()
-    }
-
-    private fun findClothColor(hex: String): ClothColor {
-        val inputRgb = RGBColor.fromHex(hex)
-        return ClothColor.entries.toTypedArray().minBy { color ->
-            val colorHex = color.hex ?: return@minBy Double.MAX_VALUE
-            calculateEuclideanDistance(inputRgb, RGBColor.fromHex(colorHex))
-        }
-    }
-
-    private fun calculateEuclideanDistance(rgb1: RGBColor, rgb2: RGBColor): Double {
-        return sqrt(
-            (rgb1.red - rgb2.red).toDouble().pow(2) +
-                    (rgb1.green - rgb2.green).toDouble().pow(2) +
-                    (rgb1.blue - rgb2.blue).toDouble().pow(2)
-        )
     }
 
     fun postCloth(user: User, cloth:Cloth): Cloth {
