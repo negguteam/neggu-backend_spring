@@ -9,4 +9,6 @@ interface RefreshTokenRepository: MongoRepository<RefreshToken, ObjectId> {
     fun deleteByUserId(userId: ObjectId?)
 
     fun findByUserId(userId: ObjectId?): RefreshToken?
+
+    fun deleteRefreshTokensByExpirationBefore(expiration: Long)
 }
