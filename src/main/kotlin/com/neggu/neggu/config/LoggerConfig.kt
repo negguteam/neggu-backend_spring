@@ -103,7 +103,7 @@ object LoggerConfig {
     }
 
     private fun sendSlackMessage(message:String, stackTrace: String?, logLevel: LogLevel) = slackScope.launch {
-        if (enable) return@launch
+        if (!enable) return@launch
         try {
             val headerBlock = getHeaderBlock(logLevel)
             val timeBlock = getTimeBlock()
