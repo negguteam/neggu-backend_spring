@@ -12,7 +12,6 @@ data class LookBook(
     @get:JvmName("getLookBookId")
     override var id: ObjectId? = null,
     val accountId: ObjectId,
-//    val title: String,
     val imageURL: String?,
     val lookBookClothes: List<LookBookCloth>,
 ) : AuditableEntity() {

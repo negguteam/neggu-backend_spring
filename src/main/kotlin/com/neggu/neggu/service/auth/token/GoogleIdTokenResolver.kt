@@ -6,17 +6,18 @@ import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.UnAuthorizedException
 import com.neggu.neggu.model.auth.OidcPublicKeys
 import com.neggu.neggu.model.auth.OidcUser
+import com.neggu.neggu.service.auth.PublicKeyCacheService
 import org.springframework.stereotype.Component
 
 @Component
 class GoogleIdTokenResolver(
-    private val googleOauthClient: GoogleOauthClient,
+    private val publicKeyCacheService: PublicKeyCacheService,
     private val googleOauthProperties: GoogleOauthProperties,
     private val idTokenProcessor: IdTokenProcessor,
 ) : OpenIdTokenResolver {
 
     override fun resolveIdToken(idToken: String): OidcUser {
-        val oidcPublicKeys: OidcPublicKeys = googleOauthClient.getPublicKeys()
+        val oidcPublicKeys: OidcPublicKeys = publicKeyCacheService.getGooglePublicKeys()
         try {
             return idTokenProcessor.process(
                 idToken,

@@ -6,17 +6,18 @@ import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.UnAuthorizedException
 import com.neggu.neggu.model.auth.OidcPublicKeys
 import com.neggu.neggu.model.auth.OidcUser
+import com.neggu.neggu.service.auth.PublicKeyCacheService
 import org.springframework.stereotype.Component
 
 @Component
 class KakaoIdTokenResolver(
-    private val kakaoOauthClient: KakaoOauthClient,
+    private val publicKeyCacheService: PublicKeyCacheService,
     private val kakaoOauthProperties: KakaoOauthProperties,
     private val idTokenProcessor: IdTokenProcessor,
 ) : OpenIdTokenResolver {
 
     override fun resolveIdToken(idToken: String): OidcUser {
-        val oidcPublicKeys: OidcPublicKeys = kakaoOauthClient.getPublicKeys()
+        val oidcPublicKeys: OidcPublicKeys = publicKeyCacheService.getKakaoPublicKeys()
         try {
             return idTokenProcessor.process(
                 idToken,
