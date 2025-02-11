@@ -49,7 +49,7 @@ class IdTokenProcessor(
         val email = claims["email"].toString()
         val profileImage: String? = when (oauthProvider) {
             OauthProvider.GOOGLE -> claims["picture"].toString()
-            OauthProvider.APPLE -> claims["picture"].toString()
+            OauthProvider.APPLE -> null
             OauthProvider.KAKAO -> claims["picture"]?.toString()
         }
         return OidcUser(email, profileImage).also {
