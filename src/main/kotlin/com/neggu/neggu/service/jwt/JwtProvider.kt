@@ -22,9 +22,10 @@ class JwtProvider(
 
     fun generateRegisterToken(
         email: String,
+        profileImage: String?,
         provider: OauthProvider,
     ): String {
-        return generateToken(email, provider.name, jwtProperties.access.expiry, jwtProperties.access.secret)
+        return generateToken(email, profileImage, provider.name, jwtProperties.access.expiry, jwtProperties.access.secret)
     }
 
     fun generateAccessToken(
@@ -45,8 +46,9 @@ class JwtProvider(
         val secretKey: SecretKey = getSecretKey(jwtProperties.access.secret)
         val claims = getClaims(token, secretKey)
         return RegisterClaims(
-            claims["email"] as String,
-            claims["provider"] as String,
+            email = claims["email"] as String,
+            profileImage = claims["profileImage"] as String?,
+            provider = claims["provider"] as String,
         )
     }
 
@@ -74,6 +76,7 @@ class JwtProvider(
 
     private fun generateToken(
         email: String,
+        profileImage: String?,
         provider: String,
         expiryTime: Long,
         secret: String,
@@ -84,6 +87,7 @@ class JwtProvider(
             .expiration(expiry)
             .claim("email", email)
             .claim("provider", provider)
+            .claim("profileImage", profileImage)
             .signWith(getSecretKey(secret))
             .compact()
     }

@@ -1,9 +1,9 @@
 package com.neggu.neggu.service.auth.token
 
-import com.neggu.neggu.api.KakaoOauthClient
 import com.neggu.neggu.config.properties.KakaoOauthProperties
 import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.UnAuthorizedException
+import com.neggu.neggu.model.auth.OauthProvider
 import com.neggu.neggu.model.auth.OidcPublicKeys
 import com.neggu.neggu.model.auth.OidcUser
 import com.neggu.neggu.service.auth.PublicKeyCacheService
@@ -20,6 +20,7 @@ class KakaoIdTokenResolver(
         val oidcPublicKeys: OidcPublicKeys = publicKeyCacheService.getKakaoPublicKeys()
         try {
             return idTokenProcessor.process(
+                OauthProvider.APPLE,
                 idToken,
                 oidcPublicKeys,
                 kakaoOauthProperties.iss,

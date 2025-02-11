@@ -24,6 +24,7 @@ class UserRegisterService(
     @Transactional
     fun registerUser(
         email: String,
+        profileImage: String?,
         provider: OauthProvider,
         userRegisterRequest: UserRegisterRequest,
     ): TokenResponse {
@@ -31,7 +32,7 @@ class UserRegisterService(
         val user = userRepository.save(
             User(
                 email = email,
-                profileImage = null,
+                profileImage = profileImage,
                 nickname = userRegisterRequest.nickname,
                 gender = userRegisterRequest.gender,
                 mood = userRegisterRequest.mood,

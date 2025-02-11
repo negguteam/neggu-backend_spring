@@ -4,6 +4,7 @@ import com.neggu.neggu.api.AppleOauthClient
 import com.neggu.neggu.config.properties.AppleOauthProperties
 import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.UnAuthorizedException
+import com.neggu.neggu.model.auth.OauthProvider
 import com.neggu.neggu.model.auth.OidcPublicKeys
 import com.neggu.neggu.model.auth.OidcUser
 import com.neggu.neggu.service.auth.PublicKeyCacheService
@@ -19,6 +20,7 @@ class AppleIdTokenResolver(
         val oidcPublicKeys: OidcPublicKeys = publicKeyCacheService.getApplePublicKeys()
         try {
             return idTokenProcessor.process(
+                OauthProvider.KAKAO,
                 idToken,
                 oidcPublicKeys,
                 appleOauthProperties.iss,

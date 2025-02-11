@@ -1,14 +1,11 @@
 package com.neggu.neggu.controller.v1.auth
 
 import com.neggu.neggu.annotation.PendingUser
-import com.neggu.neggu.config.LoggerConfig.log
-import com.neggu.neggu.config.LoggerConfig.nInfo
 import com.neggu.neggu.dto.user.*
-import com.neggu.neggu.model.auth.RegisterClaims
 import com.neggu.neggu.model.auth.OauthProvider
+import com.neggu.neggu.model.auth.RegisterClaims
 import com.neggu.neggu.service.user.SocialLoginService
 import com.neggu.neggu.service.user.UserRegisterService
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -33,6 +30,7 @@ class AuthController(
     ): TokenResponse {
         return userRegisterService.registerUser(
             registerClaims.email,
+            registerClaims.profileImage,
             OauthProvider.from(registerClaims.provider),
             userRegisterRequest,
         )

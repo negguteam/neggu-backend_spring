@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.neggu.neggu.config.LoggerConfig.log
 import com.neggu.neggu.config.LoggerConfig.nDebug
+import com.neggu.neggu.model.auth.OauthProvider
 import com.neggu.neggu.model.auth.OidcPublicKeys
 import com.neggu.neggu.model.auth.OidcUser
 import io.jsonwebtoken.Claims
@@ -18,6 +19,7 @@ class IdTokenProcessor(
 ) {
 
     fun process(
+        oauthProvider: OauthProvider,
         idToken: String,
         oidcPublicKeys: OidcPublicKeys,
         iss: String,
@@ -28,8 +30,8 @@ class IdTokenProcessor(
         val payload = parsePayload(splitToken[1])
         idTokenValidator.verifyPayload(payload, iss, aud)
         val claims = idTokenValidator.verifySignature(idToken, header, oidcPublicKeys)
-        return getUserClaims(claims).also {
-            log.nDebug( "claims : $it" )
+        return getUserClaims(oauthProvider, claims).also {
+            log.nDebug("claims : $it")
         }
     }
 
@@ -43,9 +45,14 @@ class IdTokenProcessor(
         return objectMapper.readValue<Map<String, Any>>(payloadJson)
     }
 
-    private fun getUserClaims(claims: Claims): OidcUser {
+    private fun getUserClaims(oauthProvider: OauthProvider, claims: Claims): OidcUser {
         val email = claims["email"].toString()
-        return OidcUser(email).also {
+        val profileImage: String? = when (oauthProvider) {
+            OauthProvider.GOOGLE -> claims["picture"].toString()
+            OauthProvider.APPLE -> claims["picture"].toString()
+            OauthProvider.KAKAO -> claims["picture"]?.toString()
+        }
+        return OidcUser(email, profileImage).also {
             log.nDebug("OidcUser : $it")
         }
     }

@@ -29,7 +29,7 @@ class SocialLoginService(
 
         return userRepository.findByEmailAndOauthProvider(oidcUser.email, provider)
             ?.let { user -> processExistingUser(user) }
-            ?: createPendingRegistrationResponse(oidcUser.email, provider)
+            ?: createPendingRegistrationResponse(oidcUser, provider)
     }
 
     private fun resolveOidcUser(
@@ -51,11 +51,11 @@ class SocialLoginService(
     }
 
     private fun createPendingRegistrationResponse(
-        email: String,
+        oidcUser: OidcUser,
         provider: OauthProvider,
     ): SocialLoginResponse.Pending {
         return SocialLoginResponse.Pending(
-            registerToken = jwtProvider.generateRegisterToken(email, provider),
+            registerToken = jwtProvider.generateRegisterToken(oidcUser.email, oidcUser.profileImage, provider),
         )
     }
 
