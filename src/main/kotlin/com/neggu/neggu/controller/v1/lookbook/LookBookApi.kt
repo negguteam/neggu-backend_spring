@@ -4,6 +4,7 @@ import com.neggu.neggu.dto.lookbook.LookBookCloth
 import com.neggu.neggu.model.cloth.Category
 import com.neggu.neggu.model.cloth.Cloth
 import com.neggu.neggu.model.cloth.ColorGroup
+import com.neggu.neggu.model.cloth.SubCategory
 import com.neggu.neggu.model.lookbook.LookBook
 import com.neggu.neggu.model.user.User
 import io.swagger.v3.oas.annotations.Operation
@@ -19,6 +20,7 @@ interface LookBookApi {
     fun getClothes(
         @Schema(hidden = true) user: User,
         filterCategory: Category?,
+        subCategory: SubCategory?,
         colorGroup: ColorGroup,
         size: Int,
         page: Int,

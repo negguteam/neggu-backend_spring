@@ -6,6 +6,7 @@ import com.neggu.neggu.dto.lookbook.LookBookCloth
 import com.neggu.neggu.model.cloth.Category
 import com.neggu.neggu.model.cloth.Cloth
 import com.neggu.neggu.model.cloth.ColorGroup
+import com.neggu.neggu.model.cloth.SubCategory
 import com.neggu.neggu.model.lookbook.LookBook
 import com.neggu.neggu.model.user.User
 import com.neggu.neggu.service.cloth.ClothService
@@ -32,11 +33,12 @@ class LookBookController(
     override fun getClothes(
         @LoginUser user: User,
         filterCategory: Category?,
+        subCategory: SubCategory?,
         colorGroup: ColorGroup,
         size: Int,
         page: Int,
     ): Page<Cloth> {
-        return clothService.getClothes(user, filterCategory, colorGroup, null, size, page)
+        return clothService.getClothes(user, filterCategory, subCategory, colorGroup, null, size, page)
     }
 
     @AccessTokenRequire
