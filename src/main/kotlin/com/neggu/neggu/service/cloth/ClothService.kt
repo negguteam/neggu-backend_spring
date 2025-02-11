@@ -32,9 +32,9 @@ class ClothService(
     private val colorFinder: ColorFinder
 ) {
 
-    fun getClothes(user: User, category: Category?, colorGroup: ColorGroup?, mood: Mood?, size: Int, page: Int, sortProperty : String = "createdAt"): Page<Cloth> {
+    fun getClothes(user: User, category: Category?, subCategory: SubCategory?, colorGroup: ColorGroup?, mood: Mood?, size: Int, page: Int, sortProperty : String = "createdAt"): Page<Cloth> {
         val pageable = PageRequest.of(page, size, Sort.by(sortProperty).descending())
-        return clothRepository.findClothesDynamic(user.id!!, category, colorGroup?.getColors(), mood, pageable)
+        return clothRepository.findClothesDynamic(user.id!!, category, subCategory, colorGroup?.getColors(), mood, pageable)
     }
 
     fun getCloth(id: ObjectId): Cloth {

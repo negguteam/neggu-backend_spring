@@ -36,12 +36,13 @@ class ClothController(
     override fun getClothes(
         @LoginUser user: User,
         @RequestParam(required = false) category: Category?,
+        @RequestParam(required = false) subCategory: SubCategory?,
         @RequestParam(required = false) colorGroup: ColorGroup?,
         @RequestParam(required = false) mood: Mood?,
         @RequestParam size: Int,
         @RequestParam page: Int
     ): Page<Cloth> {
-        return clothService.getClothes(user, category, colorGroup, mood, size, page)
+        return clothService.getClothes(user, category, subCategory, colorGroup, mood, size, page)
     }
 
     @AccessTokenRequire

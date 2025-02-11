@@ -1,9 +1,6 @@
 package com.neggu.neggu.repository
 
-import com.neggu.neggu.model.cloth.Category
-import com.neggu.neggu.model.cloth.Cloth
-import com.neggu.neggu.model.cloth.ClothColor
-import com.neggu.neggu.model.cloth.Mood
+import com.neggu.neggu.model.cloth.*
 import org.bson.types.ObjectId
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -19,6 +16,7 @@ class CustomClothRepositoryImpl(
     override fun findClothesDynamic(
         acountId: ObjectId,
         category: Category?,
+        subCategory: SubCategory?,
         colors: List<ClothColor>?,
         moods: Mood?,
         pageable: Pageable,
@@ -26,6 +24,7 @@ class CustomClothRepositoryImpl(
         val query = Query().apply {
             addCriteria(Criteria.where("accountId").`is`(acountId))
             category?.let { addCriteria(Criteria.where("category").`is`(it)) }
+            subCategory?.let { addCriteria(Criteria.where("subCategory").`is`(it)) }
             colors?.takeIf { it.isNotEmpty() }?.let {
                 addCriteria(Criteria.where("clothColor").`in`(it))
             }

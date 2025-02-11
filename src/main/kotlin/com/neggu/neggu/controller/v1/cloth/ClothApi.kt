@@ -28,6 +28,7 @@ interface ClothApi {
     fun getClothes(
         @Schema(hidden = true) user: User,
         category: Category?,
+        subCategory: SubCategory?,
         colorGroup: ColorGroup?,
         mood: Mood?,
         size: Int,
