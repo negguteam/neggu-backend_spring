@@ -13,7 +13,7 @@ data class LookBook(
     override var id: ObjectId? = null,
     val accountId: ObjectId,
     val imageURL: String?,
-    val lookBookClothes: List<LookBookCloth>,
+    val lookBookClothes: List<LookBookCloth> = emptyList(),
 ) : AuditableEntity() {
 
     override fun getId(): ObjectId? = id
