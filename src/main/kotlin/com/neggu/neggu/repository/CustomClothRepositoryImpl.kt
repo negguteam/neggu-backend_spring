@@ -26,7 +26,7 @@ class CustomClothRepositoryImpl(
             category?.let { addCriteria(Criteria.where("category").`is`(it)) }
             subCategory?.let { addCriteria(Criteria.where("subCategory").`is`(it)) }
             colors?.takeIf { it.isNotEmpty() }?.let {
-                addCriteria(Criteria.where("clothColor").`in`(it))
+                addCriteria(Criteria.where("color").`in`(it))
             }
             moods?.let {
                 addCriteria(Criteria.where("mood").`in`(it))
