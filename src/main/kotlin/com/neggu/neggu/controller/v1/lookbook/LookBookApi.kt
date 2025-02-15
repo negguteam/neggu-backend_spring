@@ -1,6 +1,7 @@
 package com.neggu.neggu.controller.v1.lookbook
 
-import com.neggu.neggu.dto.lookbook.LookBookCloth
+import com.neggu.neggu.dto.lookbook.LookBookRequest
+import com.neggu.neggu.model.lookbook.LookBookCloth
 import com.neggu.neggu.model.cloth.Category
 import com.neggu.neggu.model.cloth.Cloth
 import com.neggu.neggu.model.cloth.ColorGroup
@@ -30,7 +31,7 @@ interface LookBookApi {
     fun saveLookBook(
         @Schema(hidden = true) user: User,
         image: MultipartFile,
-        lookBookClothes: List<LookBookCloth>,
+        lookBookRequest: LookBookRequest,
     ): LookBook
 
 

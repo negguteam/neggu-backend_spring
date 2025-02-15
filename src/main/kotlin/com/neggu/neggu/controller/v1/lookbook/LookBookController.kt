@@ -2,7 +2,7 @@ package com.neggu.neggu.controller.v1.lookbook
 
 import com.neggu.neggu.annotation.AccessTokenRequire
 import com.neggu.neggu.config.LoginUser
-import com.neggu.neggu.dto.lookbook.LookBookCloth
+import com.neggu.neggu.dto.lookbook.LookBookRequest
 import com.neggu.neggu.model.cloth.Category
 import com.neggu.neggu.model.cloth.Cloth
 import com.neggu.neggu.model.cloth.ColorGroup
@@ -13,12 +13,7 @@ import com.neggu.neggu.service.cloth.ClothService
 import com.neggu.neggu.service.lookbook.LookBookService
 import org.springframework.data.domain.Page
 import org.springframework.http.MediaType
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 
 @RestController
@@ -49,10 +44,10 @@ class LookBookController(
     )
     override fun saveLookBook(
         @LoginUser user: User,
-        image: MultipartFile,
-        lookBookClothes: List<LookBookCloth>
+        @RequestPart image: MultipartFile,
+        @RequestPart lookBookRequest: LookBookRequest
     ): LookBook {
-        return lookBookService.registerLookBook(user, image, lookBookClothes)
+        return lookBookService.registerLookBook(user, image, lookBookRequest)
     }
 
     @AccessTokenRequire

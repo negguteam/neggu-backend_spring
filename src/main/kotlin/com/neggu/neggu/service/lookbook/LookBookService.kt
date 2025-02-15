@@ -2,7 +2,8 @@ package com.neggu.neggu.service.lookbook
 
 import com.neggu.neggu.config.LoggerConfig.log
 import com.neggu.neggu.config.LoggerConfig.nInfo
-import com.neggu.neggu.dto.lookbook.LookBookCloth
+import com.neggu.neggu.dto.lookbook.LookBookRequest
+import com.neggu.neggu.model.lookbook.LookBookCloth
 import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.ServerException
 import com.neggu.neggu.exception.UnAuthorizedException
@@ -28,12 +29,12 @@ class LookBookService(
 ) {
 
     @Transactional
-    fun registerLookBook(user: User, image: MultipartFile, lookBookClothes: List<LookBookCloth>): LookBook {
+    fun registerLookBook(user: User, image: MultipartFile, lookBookClothes: LookBookRequest): LookBook {
         val fileName = s3Service.uploadFile(user, image)
         val savedLookBook = lookBookRepository.save(LookBook(
             accountId = user.id!!,
             imageURL = fileName,
-            lookBookClothes = lookBookClothes
+            lookBookClothes = lookBookClothes.lookBookClothes
         ))
         userRepository.save(user.copy(lookBooks = user.lookBooks + savedLookBook.id!!))
         return savedLookBook.also {

@@ -1,6 +1,5 @@
 package com.neggu.neggu.model.lookbook
 
-import com.neggu.neggu.dto.lookbook.LookBookCloth
 import com.neggu.neggu.model.base.AuditableEntity
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id

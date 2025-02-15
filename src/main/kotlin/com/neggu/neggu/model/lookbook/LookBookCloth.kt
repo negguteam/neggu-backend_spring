@@ -1,4 +1,4 @@
-package com.neggu.neggu.dto.lookbook
+package com.neggu.neggu.model.lookbook
 
 import io.swagger.v3.oas.annotations.media.Schema
 
