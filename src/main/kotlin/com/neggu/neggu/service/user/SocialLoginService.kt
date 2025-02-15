@@ -1,5 +1,8 @@
 package com.neggu.neggu.service.user
 
+import com.neggu.neggu.config.LoggerConfig.log
+import com.neggu.neggu.config.LoggerConfig.nDebug
+import com.neggu.neggu.config.LoggerConfig.nInfo
 import com.neggu.neggu.dto.user.SocialLoginResponse
 import com.neggu.neggu.model.auth.OauthProvider
 import com.neggu.neggu.model.auth.OidcUser
@@ -28,7 +31,9 @@ class SocialLoginService(
         val oidcUser = resolveOidcUser(provider, idToken)
 
         return userRepository.findByEmailAndOauthProvider(oidcUser.email, provider)
-            ?.let { user -> processExistingUser(user) }
+            ?.let { user -> processExistingUser(user).also {
+                log.nDebug("User ${user.email} logged in with ${provider.name} accessToken : ${it.accessToken}")
+            } }
             ?: createPendingRegistrationResponse(oidcUser, provider)
     }
 
