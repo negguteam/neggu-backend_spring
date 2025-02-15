@@ -19,7 +19,7 @@ data class User(
     val gender: Gender,
     val mood: List<Mood> = emptyList(),
     val age: Int,
-    val profileImage: String?,
+    val profileImage: String? = null,
     val clothes: List<ObjectId> = emptyList(),
     val lookBooks: List<ObjectId> = emptyList(),
     val role: String = UserRole.ROLE_USER.value,
