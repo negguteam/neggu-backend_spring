@@ -37,6 +37,7 @@ class UserRegisterService(
                 gender = userRegisterRequest.gender,
                 mood = userRegisterRequest.mood,
                 age = userRegisterRequest.age,
+                fcmToken = userRegisterRequest.fcmToken,
                 oauthProvider = provider,
             )
         )

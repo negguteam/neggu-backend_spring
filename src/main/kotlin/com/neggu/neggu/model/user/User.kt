@@ -25,7 +25,8 @@ data class User(
     val role: String = UserRole.ROLE_USER.value,
     val status: Status = Status.ACTIVE,
     val isDeleted: Boolean = false,
-    val oauthProvider: OauthProvider = OauthProvider.KAKAO
+    val oauthProvider: OauthProvider = OauthProvider.KAKAO,
+    val fcmToken: String? = null,
 ) : AuditableEntity() {
 
     fun getAuthorities(): Collection<GrantedAuthority> {

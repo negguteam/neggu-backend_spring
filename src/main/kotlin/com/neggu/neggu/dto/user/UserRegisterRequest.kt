@@ -17,4 +17,6 @@ data class UserRegisterRequest(
     val mood: List<Mood> = emptyList(),
     @field:Schema(description = "나이", example = "20")
     val age: Int,
+    @field:Schema(description = "나이", example = "20")
+    val fcmToken: String? = null,
 )
