@@ -30,6 +30,7 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt:0.12.6")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
 	implementation("com.github.ben-manes.caffeine:caffeine:3.2.0")
+	implementation("com.google.firebase:firebase-admin:8.0.0")
 
 	implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
 	implementation("io.github.oshai:kotlin-logging-jvm:7.0.0")
