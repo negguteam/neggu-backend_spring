@@ -8,4 +8,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.data.mongodb.repository.Query
 
-interface ClothRepository : MongoRepository<Cloth, ObjectId>, CustomClothRepository
+interface ClothRepository : MongoRepository<Cloth, ObjectId>, CustomClothRepository {
+
+    fun deleteAllByAccountId(accountId: ObjectId)
+}

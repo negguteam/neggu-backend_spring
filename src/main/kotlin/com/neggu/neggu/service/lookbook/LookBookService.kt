@@ -3,7 +3,6 @@ package com.neggu.neggu.service.lookbook
 import com.neggu.neggu.config.LoggerConfig.log
 import com.neggu.neggu.config.LoggerConfig.nInfo
 import com.neggu.neggu.dto.lookbook.LookBookRequest
-import com.neggu.neggu.model.lookbook.LookBookCloth
 import com.neggu.neggu.exception.ErrorType
 import com.neggu.neggu.exception.ServerException
 import com.neggu.neggu.exception.UnAuthorizedException
@@ -33,7 +32,7 @@ class LookBookService(
         val fileName = s3Service.uploadFile(user, image)
         val savedLookBook = lookBookRepository.save(LookBook(
             accountId = user.id!!,
-            imageURL = fileName,
+            imageUrl = fileName,
             lookBookClothes = lookBookClothes.lookBookClothes
         ))
         userRepository.save(user.copy(lookBooks = user.lookBooks + savedLookBook.id!!))
@@ -46,7 +45,7 @@ class LookBookService(
     fun deleteLookBook(user: User, lookBookId: String): LookBook {
         val lookBook = lookBookRepository.findByIdOrNull(lookBookId.toObjectId()) ?: throw ServerException(ErrorType.NotFoundLookBook)
         if (lookBook.accountId != user.id) { throw UnAuthorizedException(ErrorType.InvalidIdToken) }
-        s3Service.deleteFile(lookBook.imageURL)
+        s3Service.deleteFile(lookBook.imageUrl)
         lookBookRepository.delete(lookBook)
         userRepository.save(user.copy(lookBooks = user.lookBooks.filter { it != lookBook.id }))
         return lookBook.also {
